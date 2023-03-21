@@ -59,7 +59,7 @@ public class DemoApplication implements CommandLineRunner {
 		System.out.println(srv.get(1));
 		System.out.println(srvLocal.get(1));
 		System.out.println(rango.toString());
-		//System.out.println(rango.getMax() + rango.getMin());
+		System.out.println(rango.getMax() + rango.getMin());
 		//System.out.println(tonteria.dimeAlgo());
 		System.out.println(tonteria != null ? tonteria.dimeAlgo() : "Tonteria nula");
 		System.out.println(config);
