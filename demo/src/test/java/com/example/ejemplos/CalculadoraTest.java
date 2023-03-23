@@ -15,6 +15,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import com.example.core.test.SpaceCamelCase;
+
 // De forma predeterminada el orden es "aleaotrio" según algorítmo interno de JUnit
 // Para dar una orden a los tests
 @TestMethodOrder(MethodOrderer.DisplayName.class)
@@ -35,7 +37,8 @@ class CalculadoraTest {
 	// Se marca con la anotación nested para que sepa que funciona con las pruebas
 	@Nested
 	@DisplayName("Pruebas del método Suma")
-	@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+	//@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+	@DisplayNameGeneration(SpaceCamelCase.class)
 	class Suma {
 		//
 		@Nested

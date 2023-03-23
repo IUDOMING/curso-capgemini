@@ -2,7 +2,7 @@
 
 ### Contenidos:
 
-Pruebas: Pruebas varias. Trastear con cosas.+
+Pruebas: Pruebas varias. Trastear con cosas.
 
 Demo-Maven: Primer proyecto Maven
 
