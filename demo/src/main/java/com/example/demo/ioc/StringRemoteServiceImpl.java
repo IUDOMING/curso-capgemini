@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exceptions.InvalidDataException;
+import com.example.demo.exceptions.NotFoundException;
+
 @Service
 //Se clasifica la clase con un nombre y se usará para identificar al que llamamos
 @Qualifier("Remote")
@@ -18,25 +21,27 @@ public class StringRemoteServiceImpl implements StringService {
 	@Override
 	public String get(Integer id) {
 		// TODO Auto-generated method stub
-		return dao.load()+ " en remoto";
+		return dao.load() + " en remoto";
 	}
 
 	@Override
-	public void add(String item) {
+	public void add(String item) throws InvalidDataException {
+			dao.save(item);
+
+	}
+
+	@Override
+	public void modify(String item) throws InvalidDataException {
 		// TODO Auto-generated method stub
 		dao.save(item);
+
 	}
 
 	@Override
-	public void modify(String item) {
-		// TODO Auto-generated method stub
-		dao.save(item);
-	}
-
-	@Override
-	public void remove(Integer id) {
+	public void remove(Integer id) throws InvalidDataException {
 		// TODO Auto-generated method stub
 		dao.save(id.toString());
+
 	}
 
 }
