@@ -40,6 +40,7 @@ class PersonaTest {
 				);
 	}
 	
+	
 	//Para hacer multiples repeticiónes de un test, generando mismo test varias veces
 	//Forma correcta
 	@RepeatedTest(value = 5, name = "{displayName} {currentRepetition}/{totalRepetitions}")

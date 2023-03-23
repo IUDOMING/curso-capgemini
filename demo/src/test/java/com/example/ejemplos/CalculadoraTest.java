@@ -8,11 +8,16 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+// De forma predeterminada el orden es "aleaotrio" según algorítmo interno de JUnit
+// Para dar una orden a los tests
+@TestMethodOrder(MethodOrderer.DisplayName.class)
 class CalculadoraTest {
 
 	// Se crea el objeto calculadora
@@ -35,6 +40,7 @@ class CalculadoraTest {
 		//
 		@Nested
 		class OK {
+			
 			@Test
 			void test_Suma_Positivo_Positivo() {
 
