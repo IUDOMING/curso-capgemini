@@ -1,3 +1,9 @@
-## Curso Spring Capgemini 2023 - Rama DEMO
+## Curso Spring Capgemini 2023
 
-### Nothing to see here
+### Contenidos:
+
+Pruebas: Pruebas varias. Trastear con cosas.+
+
+Demo-Maven: Primer proyecto Maven
+
+Demo: Proyecto del curso
