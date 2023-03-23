@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -79,6 +80,19 @@ class CalculadoraTest {
 				var rslt = calc.suma(0.1, 0.2);
 
 				assertEquals(0.3, rslt);
+			}
+			
+			
+			
+			@Test
+			// Se salta la prueba y no la hace
+			@Disabled
+			void testSumaMultiple() {
+				assertEquals(-2, calc.suma(1,1));
+				assertEquals(0, calc.suma(-1,1));
+				assertEquals(0, calc.suma(1,-1));
+				assertEquals(-2, calc.suma(-1,-1));
+				assertEquals(0, calc.suma(0,0));
 			}
 
 			// Muestra información sobre el test
