@@ -1,6 +1,7 @@
 package com.example.ejemplos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -95,19 +96,25 @@ class CalculadoraTest {
 		@Nested
 		class OK{
 			
-			@Test
-			void testDividirPorZerp() {
+			void testDividirPorCero() {
 				var calc = new Calculadora();
-				
+								
 				var rslt = calc.divide(1, 0.0);
 				
 				assertEquals(Double.POSITIVE_INFINITY, rslt);
 			}
 			
-			
+						
 		}	
 		@Nested
 		class KO{
+			@Test
+			void testDividirPorCero() {
+				var calc = new Calculadora();
+								
+				assertThrows(ArithmeticException.class, ()->calc.divide(1, 0));
+
+			}
 			
 			
 		}
