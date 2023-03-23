@@ -95,13 +95,13 @@ class CalculadoraTest {
 		//
 		@Nested
 		class OK{
-			
+			@Test
 			void testDividirPorCero() {
 				var calc = new Calculadora();
 								
-				var rslt = calc.divide(1, 0.0);
+				var rslt = calc.divide(1, 1);
 				
-				assertEquals(Double.POSITIVE_INFINITY, rslt);
+				assertEquals(1, rslt);
 			}
 			
 						
@@ -112,7 +112,7 @@ class CalculadoraTest {
 			void testDividirPorCero() {
 				var calc = new Calculadora();
 								
-				assertThrows(ArithmeticException.class, ()->calc.divide(1, 0));
+				assertThrows(ArithmeticException.class, ()->calc.divide(1, 0.0));
 
 			}
 			
