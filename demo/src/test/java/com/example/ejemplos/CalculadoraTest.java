@@ -2,6 +2,10 @@ package com.example.ejemplos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -95,13 +99,15 @@ class CalculadoraTest {
 			
 			@Test
 			// Se salta la prueba y no la hace
-			@Disabled
+			//@Disabled
+			//Solo que no pase una prueba, se detiene completamente
 			void testSumaMultiple() {
-				assertEquals(-2, calc.suma(1,1));
+				assertEquals(2, calc.suma(1,1));
 				assertEquals(0, calc.suma(-1,1));
 				assertEquals(0, calc.suma(1,-1));
 				assertEquals(-2, calc.suma(-1,-1));
 				assertEquals(0, calc.suma(0,0));
+				assumeTrue(false, "La tengo a medias");
 			}
 
 			// Muestra información sobre el test
@@ -114,6 +120,26 @@ class CalculadoraTest {
 			void testSumaParametrizado(double op1, double op2, double rslt) {
 				assertEquals(rslt, calc.suma(op1, op2));
 
+			}
+			
+			//Ejemplo de Test Mock
+			@Test
+			void testSumaMock() {
+				Calculadora calc = mock(Calculadora.class);
+				//Le indicas el resultado que quieres que te de cuando se de X situación
+				when(calc.suma(2, 2)).thenReturn(3.0);
+				//Cuando se da la situación indicada, pasa la prueba (pese a que fuera erronea)
+				assertEquals(3, calc.suma(2, 2));
+			}
+			
+			//Ejemplo de Test Mock
+			@Test
+			void testSumaMockAny() {
+				Calculadora calc = mock(Calculadora.class);
+				//Le indicas el resultado que quieres que te de cuando se de X situación
+				when(calc.suma(anyDouble(),anyDouble())).thenReturn(3.0);
+				//Cuando se da la situación indicada, pasa la prueba (pese a que fuera erronea)
+				assertEquals(3, calc.suma(2, 2));
 			}
 
 		}
