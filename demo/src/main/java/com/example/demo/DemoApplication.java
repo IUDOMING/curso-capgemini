@@ -21,11 +21,11 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("Aplicación arrancada");
-//		(new EjemplosIoC()).run();
+//		(new EjemplosC()).run();
 //		var actor = new Actor(0, "Pepito", "grillo");
 //		dao.save(actor);
-//		dao.deleteById(215);
-//		var item = dao.findById(215);
+//		dao.deleteById(201);
+//		var item = dao.findById(201);
 //		if(item.isPresent()) {
 //			var actor = item.get();
 //			actor.setLastName(actor.getLastName().toUpperCase());
@@ -36,9 +36,16 @@ public class DemoApplication implements CommandLineRunner {
 //		}
 //		dao.findTop5ByFirstNameStartingWithOrderByLastNameDesc("P")
 //			.forEach(System.out::println);
-		dao.findTop5ByFirstNameStartingWith("P", Sort.by("LastName").descending())
-			.forEach(System.out::println);
-		dao.findTop5ByFirstNameStartingWith("P", Sort.by("FirstName"))
+//		dao.findTop5ByFirstNameStartingWith("P", Sort.by("LastName").descending())
+//			.forEach(System.out::println);
+//		dao.findTop5ByFirstNameStartingWith("P", Sort.by("FirstName"))
+//		.forEach(System.out::println);
+//		dao.findConJPQL().forEach(System.out::println);
+//		dao.findConJPQL(5).forEach(System.out::println);
+//		dao.findConSQL(5).forEach(System.out::println);
+		dao.findAll((root, query, builder) -> builder.lessThan(root.get("actorId"), 5))
+		.forEach(System.out::println);
+		dao.findAll((root, query, builder) -> builder.greaterThan(root.get("actorId"), 200))
 		.forEach(System.out::println);
 	}
 
