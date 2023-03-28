@@ -3,7 +3,7 @@ package com.example.demo.ioc;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.exceptions.ArgumentoInvalidoException;
+
 import com.example.demo.exceptions.InvalidDataException;
 
 //Para que Spring detecte esta clase se ha de usar @Component o @Repository debido a su origen
