@@ -4,16 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import com.example.demo.domains.contracts.repositories.ActorRepository;
-import com.example.demo.domains.entities.Actor;
 import com.example.demo.domains.entities.dtos.ActorDTO;
-import com.example.demo.domains.entities.dtos.ActorShort;
-
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -100,8 +95,20 @@ public class DemoApplication implements CommandLineRunner {
 		
 //		dao.findByActorIdNotNull().forEach(System.out::println);
 //		dao.findByActorIdNotNull().forEach(item -> System.out.println(item.getActorId()+ " " + item.getNombre()));
-		dao.findAllBy(ActorShort.class).forEach(item -> System.out.println(item.getActorId()+ " " + item.getNombre()));
-		dao.findAllBy(ActorDTO.class).forEach(System.out::println);
+//		dao.findAllBy(ActorShort.class).forEach(item -> System.out.println(item.getActorId()+ " " + item.getNombre()));
+//		dao.findAllBy(ActorDTO.class).forEach(System.out::println);
+		
+		
+		//Obtenemos la info en formato JSON
+		ObjectMapper objectMapper = new ObjectMapper();
+		dao.findAllBy(ActorDTO.class).stream().map(item -> {try {
+			return objectMapper.writeValueAsString(item);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		}).forEach(System.out::println);
 
 	}
 
