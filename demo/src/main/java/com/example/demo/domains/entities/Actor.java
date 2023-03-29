@@ -60,7 +60,7 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	// Se indica que solo hay mayusculas. No hace falta indicar el tamaño del
 	// pattern ya que
 	// el @Size lo controla.
-	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayúsculas.")
+	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayúsculas")
 	private String lastName;
 
 	@Column(name = "last_update", insertable = false, updatable = false, nullable = false)
