@@ -71,7 +71,7 @@ public class DemoApplication implements CommandLineRunner {
 		// Valida la información y en caso de fallo da información sobre las violaciones
 		// en las reglas especificadas.
 		//Forma manual de hacerlo
-		var actor = new Actor(0, "", "grillo");
+		var actor = new Actor(0, "77619560X", "grillo");
 //		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 //		var err = validator.validate(actor);
 //		if (err.size() > 0) {

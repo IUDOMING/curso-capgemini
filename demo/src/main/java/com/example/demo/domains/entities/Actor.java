@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.example.demo.domains.core.entities.EntityBase;
+import com.example.demo.domains.core.validations.NIF;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,6 +51,8 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	// Indicamos el tamaño máximo que se aplicará en las validaciones.
 	// Usarlo siempre que haya un lenght
 	@Size(max = 45, min = 2)
+	//Esto era para probar el DNI
+//	@NIF
 	private String firstName;
 
 	@Column(name = "last_name", nullable = false, length = 45)
