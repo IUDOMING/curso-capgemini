@@ -5,10 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.demo.domains.contracts.repositories.ActorRepository;
-import com.example.demo.domains.entities.dtos.ActorDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.demo.domains.contracts.services.ActorService;
+import com.example.demo.domains.entities.Actor;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -18,7 +16,7 @@ public class DemoApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	ActorRepository dao;
+	ActorService srv;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -109,7 +107,7 @@ public class DemoApplication implements CommandLineRunner {
 //			return null;
 //		}).forEach(System.out::println);
 		
-		
+		srv.add(new Actor (0, "Jesus", "GERMAN"));
 
 	}
 
