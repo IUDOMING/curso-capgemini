@@ -8,12 +8,13 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.example.demo.domains.core.repositories.contracts.RepositoryWithProjections;
 import com.example.demo.domains.entities.Actor;
 import com.example.demo.domains.entities.dtos.ActorShort;
 
 //Mediante la extensión de JpaSpecificationExecute podemos hacer consultas directamente
 //usanod especificaciones
-public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor> {
+public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>, RepositoryWithProjections{
 	
 	List<Actor> findTop5ByFirstNameStartingWithOrderByLastNameDesc(String prefijo);
 

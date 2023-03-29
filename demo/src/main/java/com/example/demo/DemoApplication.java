@@ -69,7 +69,7 @@ public class DemoApplication implements CommandLineRunner {
 
 		// Valida la información y en caso de fallo da información sobre las violaciones
 		// en las reglas especificadas.
-		//Forma manual de hacerlo
+		// Forma manual de hacerlo
 //		var actor = new Actor(0, "Pepito", "grillo");
 //		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 //		var err = validator.validate(actor);
@@ -77,38 +77,39 @@ public class DemoApplication implements CommandLineRunner {
 //			err.forEach(e -> System.out.println(e.getPropertyPath() + ": " + e.getMessage()));
 //		} else
 //			dao.save(actor);
-		//Mediante clases y anotaciones
+		// Mediante clases y anotaciones
 //		if(actor.isInvalid())
 //			System.out.println(actor.getErrorsMessage());
 //		else
 //			dao.save(actor);
-		
-		//Pides la página 1 (la primera página es la 0, y cada página tiene 20 filas)
-		//Mostrará del 21 al 40
+
+		// Pides la página 1 (la primera página es la 0, y cada página tiene 20 filas)
+		// Mostrará del 21 al 40
 //		var rslt=dao.findAll(PageRequest.of(1, 20, Sort.by("actorId")));
 //		rslt.getContent().forEach(System.out::println);
-		
-		
-		//Haciendo la forma manual para la proyección
+
+		// Haciendo la forma manual para la proyección
 //		var rslt=dao.findAll(PageRequest.of(1, 20, Sort.by("actorId")));
 //		rslt.getContent().stream().map(item -> ActorDTO.from(item).forEach(System.out::println));
-		
+
 //		dao.findByActorIdNotNull().forEach(System.out::println);
 //		dao.findByActorIdNotNull().forEach(item -> System.out.println(item.getActorId()+ " " + item.getNombre()));
 //		dao.findAllBy(ActorShort.class).forEach(item -> System.out.println(item.getActorId()+ " " + item.getNombre()));
 //		dao.findAllBy(ActorDTO.class).forEach(System.out::println);
+
+		// Obtenemos la info en formato JSON
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		dao.findAllBy(ActorDTO.class).stream().map(item -> {
+//			try {
+//				return objectMapper.writeValueAsString(item);
+//			} catch (JsonProcessingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			return null;
+//		}).forEach(System.out::println);
 		
 		
-		//Obtenemos la info en formato JSON
-		ObjectMapper objectMapper = new ObjectMapper();
-		dao.findAllBy(ActorDTO.class).stream().map(item -> {try {
-			return objectMapper.writeValueAsString(item);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-		}).forEach(System.out::println);
 
 	}
 
