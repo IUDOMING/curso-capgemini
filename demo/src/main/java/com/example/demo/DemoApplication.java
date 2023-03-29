@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.Sort;
 
 import com.example.demo.domains.contracts.repositories.ActorRepository;
+import com.example.demo.domains.entities.Actor;
+
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -22,7 +25,7 @@ public class DemoApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Aplicación arrancada");
 //		(new EjemplosC()).run();
-//		var actor = new Actor(0, "Pepito", "grillo");
+//		var actor = new Actor(0, "Pepito2", "grillo2");
 //		dao.save(actor);
 //		dao.deleteById(201);
 //		var item = dao.findById(201);
@@ -55,15 +58,31 @@ public class DemoApplication implements CommandLineRunner {
 		// cierre la consulta
 		// Y pueda conseguir más datos dentro de la tabla. (No cierra la conexión hasta
 		// que se acaba el método)
-		var item = dao.findById(1);
-		if (item.isPresent()) {
-			var actor = item.get();
-			System.out.println(actor);
-			actor.getFilmActors().forEach(o -> System.out.println(o.getFilm().getTitle()));
-			// dao.findAll().forEach(System.out::println);
-		} else {
-			System.out.println("Actor no encontrado");
-		}
+//		var item = dao.findById(1);
+//		if (item.isPresent()) {
+//			var actor = item.get();
+//			System.out.println(actor);
+//			actor.getFilmActors().forEach(o -> System.out.println(o.getFilm().getTitle()));
+//			// dao.findAll().forEach(System.out::println);
+//		} else {
+//			System.out.println("Actor no encontrado");
+//		}
+
+		// Valida la información y en caso de fallo da información sobre las violaciones
+		// en las reglas especificadas.
+		//Forma manual de hacerlo
+		var actor = new Actor(0, "", "grillo");
+//		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+//		var err = validator.validate(actor);
+//		if (err.size() > 0) {
+//			err.forEach(e -> System.out.println(e.getPropertyPath() + ": " + e.getMessage()));
+//		} else
+//			dao.save(actor);
+		//Mediante clases y anotaciones
+		if(actor.isInvalid())
+			System.out.println(actor.getErrorsMessage());
+		else
+			dao.save(actor);
 	}
 
 }

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.example.demo.domains.core.entities.EntityBase;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,7 +29,9 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "actor")
 @NamedQuery(name = "Actor.findAll", query = "SELECT a FROM Actor a")
-public class Actor implements Serializable {
+
+//Hereda de EntityBase, que es nuestro validador de errores
+public class Actor extends EntityBase<Actor> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// Con el @Id está implicito el not Null
