@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,7 +15,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 /**
  * The persistent class for the actor database table.
@@ -29,34 +30,47 @@ import jakarta.persistence.Table;
 public class Actor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	// Con el @Id está implicito el not Null
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "actor_id", unique = true, nullable = false)
 	private int actorId;
 
+	// Los datos de @Column, solo se aplican si se genera la BBDD desde nuestras
+	// entidades
+	// No afectan a las validaciones.
 	@Column(name = "first_name", nullable = false, length = 45)
+	// Como no puede ser nulo ponemos directamente el @NotBlank cubriendo el String
+	// vacio y espacios en blanco además del Null
+	@NotBlank
+	// Indicamos el tamaño máximo que se aplicará en las validaciones.
+	// Usarlo siempre que haya un lenght
+	@Size(max = 45, min = 2)
 	private String firstName;
 
 	@Column(name = "last_name", nullable = false, length = 45)
+	@Size(max = 45, min = 2)
+	// Se indica que solo hay mayusculas. No hace falta indicar el tamaño del
+	// pattern ya que
+	// el @Size lo controla.
+	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayúsculas.")
 	private String lastName;
 
 	@Column(name = "last_update", insertable = false, updatable = false, nullable = false)
+	@PastOrPresent
 	private Timestamp lastUpdate;
 
 	// bi-directional many-to-one association to FilmActor
-	@OneToMany(mappedBy = "actor", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "actor", fetch = FetchType.EAGER)
 	private List<FilmActor> filmActors = new ArrayList<>();
 
-	
 	public Actor() {
 	}
 
-	
 	public Actor(int actorId) {
 		super();
 		this.actorId = actorId;
 	}
-	
 
 	public Actor(int actorId, String firstName, String lastName) {
 		super();
@@ -146,8 +160,7 @@ public class Actor implements Serializable {
 
 	}
 
-	
 	public void recibePremio(String premio) {
-		
+
 	}
 }
