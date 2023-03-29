@@ -2,11 +2,11 @@ package com.example.demo.domains.entities.dtos;
 
 import com.example.demo.domains.entities.Actor;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+//@Data @AllArgsConstructor @NoArgsConstructor
+
+@Value
 public class ActorDTO {
 
 	private int actorId;

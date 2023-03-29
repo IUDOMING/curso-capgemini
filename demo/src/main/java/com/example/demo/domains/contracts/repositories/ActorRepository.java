@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo.domains.entities.Actor;
+import com.example.demo.domains.entities.dtos.ActorShort;
 
 //Mediante la extensión de JpaSpecificationExecute podemos hacer consultas directamente
 //usanod especificaciones
@@ -17,7 +18,15 @@ public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpeci
 	List<Actor> findTop5ByFirstNameStartingWithOrderByLastNameDesc(String prefijo);
 
 	List<Actor> findTop5ByFirstNameStartingWith(String prefijo, Sort orden);
+	
+	//List<Actor> findTop5ByFirstName(String prefijo, Sort orden);
 
+	
+	List<ActorShort> findByActorIdNotNull();
+	
+	<T> List <T> findAllBy(Class<T> type);
+	
+	
 	// Consultamos todos los datos de actores donde la id del actor es menor al
 	// parametro que se pasará
 	@Query("SELECT a from Actor a WHERE a.actorId < :id")

@@ -68,7 +68,8 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	private Timestamp lastUpdate;
 
 	// bi-directional many-to-one association to FilmActor
-	@OneToMany(mappedBy = "actor", fetch = FetchType.EAGER)
+	//@OneToMany(mappedBy = "actor", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "actor", fetch = FetchType.LAZY)
 	private List<FilmActor> filmActors = new ArrayList<>();
 
 	public Actor() {

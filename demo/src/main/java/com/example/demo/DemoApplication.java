@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import com.example.demo.domains.contracts.repositories.ActorRepository;
 import com.example.demo.domains.entities.Actor;
+import com.example.demo.domains.entities.dtos.ActorDTO;
+import com.example.demo.domains.entities.dtos.ActorShort;
 
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -71,7 +75,7 @@ public class DemoApplication implements CommandLineRunner {
 		// Valida la información y en caso de fallo da información sobre las violaciones
 		// en las reglas especificadas.
 		//Forma manual de hacerlo
-		var actor = new Actor(0, "Pepito", "grillo");
+//		var actor = new Actor(0, "Pepito", "grillo");
 //		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 //		var err = validator.validate(actor);
 //		if (err.size() > 0) {
@@ -79,10 +83,26 @@ public class DemoApplication implements CommandLineRunner {
 //		} else
 //			dao.save(actor);
 		//Mediante clases y anotaciones
-		if(actor.isInvalid())
-			System.out.println(actor.getErrorsMessage());
-		else
-			dao.save(actor);
+//		if(actor.isInvalid())
+//			System.out.println(actor.getErrorsMessage());
+//		else
+//			dao.save(actor);
+		
+		//Pides la página 1 (la primera página es la 0, y cada página tiene 20 filas)
+		//Mostrará del 21 al 40
+//		var rslt=dao.findAll(PageRequest.of(1, 20, Sort.by("actorId")));
+//		rslt.getContent().forEach(System.out::println);
+		
+		
+		//Haciendo la forma manual para la proyección
+//		var rslt=dao.findAll(PageRequest.of(1, 20, Sort.by("actorId")));
+//		rslt.getContent().stream().map(item -> ActorDTO.from(item).forEach(System.out::println));
+		
+//		dao.findByActorIdNotNull().forEach(System.out::println);
+//		dao.findByActorIdNotNull().forEach(item -> System.out.println(item.getActorId()+ " " + item.getNombre()));
+		dao.findAllBy(ActorShort.class).forEach(item -> System.out.println(item.getActorId()+ " " + item.getNombre()));
+		dao.findAllBy(ActorDTO.class).forEach(System.out::println);
+
 	}
 
 }
