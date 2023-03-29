@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import com.example.core.test.SpaceCamelCase;
+import com.example.demo.domains.core.validations.Validation;
 
 class ValidationTest {
 

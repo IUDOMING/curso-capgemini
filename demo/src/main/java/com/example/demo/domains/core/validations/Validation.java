@@ -1,4 +1,4 @@
-package com.example.demo.ioc;
+package com.example.demo.domains.core.validations;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;
