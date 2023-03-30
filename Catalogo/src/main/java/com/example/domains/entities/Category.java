@@ -1,4 +1,4 @@
-package com.example.demo.domains.entities;
+package com.example.domains.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -29,7 +29,6 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="category_id", unique=true, nullable=false)
 	
-	//Como se trataba de un Byte en la Base de Datos, indicamos la restricción
 	@Max(255)
 	private int categoryId;
 
@@ -39,7 +38,6 @@ public class Category implements Serializable {
 	@Column(nullable=false, length=25)
 	private String name;
 
-	//bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy="category")
 	private List<FilmCategory> filmCategories;
 

@@ -3,6 +3,9 @@ package com.example.demo.domains.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
+
+import com.example.demo.domains.core.entities.EntityBase;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,37 +16,43 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  * The persistent class for the category database table.
  * 
  */
 @Entity
-@Table(name="category")
-@NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
-public class Category implements Serializable {
+@Table(name = "category")
+@NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
+public class Category extends EntityBase<Category> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="category_id", unique=true, nullable=false)
-	
-	//Como se trataba de un Byte en la Base de Datos, indicamos la restricción
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "category_id", unique = true, nullable = false)
 	@Max(255)
 	private int categoryId;
 
-	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
+	@Column(name = "last_update", insertable = false, updatable = false, nullable = false)
 	private Timestamp lastUpdate;
 
-	@Column(nullable=false, length=25)
+	@Column(nullable = false, length = 25)
+	@NotBlank
+	@Size(max = 25, min = 2)
 	private String name;
 
-	//bi-directional many-to-one association to FilmCategory
-	@OneToMany(mappedBy="category")
+	// bi-directional many-to-one association to FilmCategory
+	@OneToMany(mappedBy = "category")
 	private List<FilmCategory> filmCategories;
 
 	public Category() {
+	}
+
+	public Category(int categoryId, String name) {
+		this.categoryId = categoryId;
+		this.name = name;
 	}
 
 	public int getCategoryId() {
@@ -90,6 +99,29 @@ public class Category implements Serializable {
 		filmCategory.setCategory(null);
 
 		return filmCategory;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(categoryId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Category other = (Category) obj;
+		return categoryId == other.categoryId;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [categoryId=" + categoryId + ", name=" + name + ", lastUpdate="
+				+ lastUpdate + "]";
 	}
 
 }

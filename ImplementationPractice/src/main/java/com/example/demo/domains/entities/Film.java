@@ -1,10 +1,27 @@
 package com.example.demo.domains.entities;
 
 import java.io.Serializable;
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
+
+import com.example.demo.domains.core.entities.EntityBase;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  * The persistent class for the film database table.
@@ -13,9 +30,10 @@ import java.util.List;
 @Entity
 @Table(name = "film")
 @NamedQuery(name = "Film.findAll", query = "SELECT f FROM Film f")
-public class Film implements Serializable {
+public class Film extends EntityBase<Film> implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "film_id", unique = true, nullable = false)
@@ -30,6 +48,7 @@ public class Film implements Serializable {
 	private int length;
 
 	@Column(length = 1)
+	@NotBlank
 	private String rating;
 
 	@Column(name = "release_year")
@@ -45,6 +64,8 @@ public class Film implements Serializable {
 	private BigDecimal replacementCost;
 
 	@Column(nullable = false, length = 128)
+	@NotBlank
+	@Size(max = 128, min = 2)
 	private String title;
 
 	// bi-directional many-to-one association to Language
@@ -67,6 +88,8 @@ public class Film implements Serializable {
 
 	public Film() {
 	}
+	
+	//Falta el constructor sobrecargado
 
 	public int getFilmId() {
 		return this.filmId;
@@ -206,6 +229,29 @@ public class Film implements Serializable {
 		filmCategory.setFilm(null);
 
 		return filmCategory;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(filmId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Film other = (Film) obj;
+		return filmId == other.filmId;
+	}
+
+	@Override
+	public String toString() {
+		return "Film [filmId=" + filmId + ", description=" + description + ", lastUpdate=" + lastUpdate + ", length="
+				+ length + ", rating=" + rating + ", releaseYear=" + releaseYear + ", title=" + title + "]";
 	}
 
 }

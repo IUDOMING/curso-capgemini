@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.example.domains.entities.Film;
+
 
 /**
  * The persistent class for the inventory database table.

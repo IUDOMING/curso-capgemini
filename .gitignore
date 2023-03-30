@@ -6,6 +6,7 @@ target/**
 *.class
 kk/**
 EntitiesCreation/**
+ImplementationPractice/**
 
 # eclipse specific
 *.pydevproject
