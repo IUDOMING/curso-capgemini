@@ -5,6 +5,7 @@ target/**
 *.ear
 *.class
 kk/**
+EntitiesCreation/**
 
 # eclipse specific
 *.pydevproject
