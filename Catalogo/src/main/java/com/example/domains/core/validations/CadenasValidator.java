@@ -1,7 +1,6 @@
 package com.example.domains.core.validations;
 
 public class CadenasValidator {
-
 	public static boolean isNIF(String value) {
 		if (value == null)
 			return true;

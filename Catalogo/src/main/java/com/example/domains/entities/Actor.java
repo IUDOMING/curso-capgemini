@@ -8,25 +8,12 @@ import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-/**
- * The persistent class for the actor database table.
- * 
- */
 @Entity
 @Table(name = "actor")
 @NamedQuery(name = "Actor.findAll", query = "SELECT a FROM Actor a")
@@ -39,21 +26,20 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	private int actorId;
 
 	@Column(name = "first_name", nullable = false, length = 45)
-
 	@NotBlank
 	@Size(max = 45, min = 2)
 	private String firstName;
 
 	@Column(name = "last_name", nullable = false, length = 45)
 	@Size(max = 45, min = 2)
-
-	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayúsculas")
+	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayusculas")
 	private String lastName;
 
 	@Column(name = "last_update", insertable = false, updatable = false, nullable = false)
 	@PastOrPresent
 	private Timestamp lastUpdate;
 
+	// bi-directional many-to-one association to FilmActor
 	@OneToMany(mappedBy = "actor", fetch = FetchType.LAZY)
 	private List<FilmActor> filmActors = new ArrayList<>();
 

@@ -4,10 +4,10 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.example.domains.core.contracts.services.ProjectionDomainService;
-import com.example.domains.entities.Actor;
+import com.example.domains.entities.Language;
 
-public interface ActorService extends ProjectionDomainService<Actor, Integer> {
+public interface LanguageRepository extends ProjectionDomainService<Language, Integer> {
 
-	List<Actor> novedades(Timestamp fecha);
+	List<Language> novedades(Timestamp fecha);
 
 }

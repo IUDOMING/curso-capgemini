@@ -3,22 +3,22 @@ package com.example.domains.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 
-/**
- * The primary key class for the film_actor database table.
- * 
- */
 @Embeddable
 public class FilmActorPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="actor_id", insertable=false, updatable=false, unique=true, nullable=false)
+	@Column(name="actor_id", insertable=false, updatable=false)
 	private int actorId;
 
-	@Column(name="film_id", insertable=false, updatable=false, unique=true, nullable=false)
+	@Column(name="film_id", insertable=false, updatable=false)
 	private int filmId;
 
 	public FilmActorPK() {
+	}
+	public FilmActorPK(int filmId, int actorId) {
+		this.actorId = actorId;
+		this.filmId = filmId;
 	}
 	public int getActorId() {
 		return this.actorId;

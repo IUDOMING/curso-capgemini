@@ -1,5 +1,6 @@
 package com.example.domains.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,7 +81,7 @@ public class ActorServiceImpl implements ActorService {
 	@Override
 	public Actor modify(Actor item) throws NotFoundException, InvalidDataException {
 		if (item == null)
-			throw new InvalidDataException("No puede ser nuelo");
+			throw new InvalidDataException("No puede ser nulo");
 
 		if (item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
@@ -94,7 +95,7 @@ public class ActorServiceImpl implements ActorService {
 	public void delete(Actor item) throws InvalidDataException {
 		// TODO Auto-generated method stub
 		if (item == null)
-			throw new InvalidDataException("No puede ser nuelo");
+			throw new InvalidDataException("No puede ser nulo");
 		deleteById(item.getActorId());
 
 	}
@@ -104,6 +105,12 @@ public class ActorServiceImpl implements ActorService {
 		// TODO Auto-generated method stub
 		dao.deleteById(id);
 
+	}
+
+	@Override
+	public List<Actor> novedades(Timestamp fecha) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
