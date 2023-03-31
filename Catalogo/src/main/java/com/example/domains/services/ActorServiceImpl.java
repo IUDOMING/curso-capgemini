@@ -1,5 +1,6 @@
-package com.example.demo.domains.services;
+package com.example.domains.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,12 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domains.contracts.repositories.ActorRepository;
-import com.example.demo.domains.contracts.services.ActorService;
-import com.example.demo.domains.core.repositories.contracts.RepositoryWithProjections;
-import com.example.demo.domains.entities.Actor;
-import com.example.demo.exceptions.InvalidDataException;
-import com.example.demo.exceptions.NotFoundException;
+import com.example.domains.contracts.repository.ActorRepository;
+import com.example.domains.contracts.services.ActorService;
+import com.example.domains.entities.Actor;
+import com.example.exceptions.InvalidDataException;
+import com.example.exceptions.NotFoundException;
 
 @Service
 public class ActorServiceImpl implements ActorService {
@@ -81,7 +81,7 @@ public class ActorServiceImpl implements ActorService {
 	@Override
 	public Actor modify(Actor item) throws NotFoundException, InvalidDataException {
 		if (item == null)
-			throw new InvalidDataException("No puede ser nuelo");
+			throw new InvalidDataException("No puede ser nulo");
 
 		if (item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
@@ -95,7 +95,7 @@ public class ActorServiceImpl implements ActorService {
 	public void delete(Actor item) throws InvalidDataException {
 		// TODO Auto-generated method stub
 		if (item == null)
-			throw new InvalidDataException("No puede ser nuelo");
+			throw new InvalidDataException("No puede ser nulo");
 		deleteById(item.getActorId());
 
 	}
@@ -105,6 +105,12 @@ public class ActorServiceImpl implements ActorService {
 		// TODO Auto-generated method stub
 		dao.deleteById(id);
 
+	}
+
+	@Override
+	public List<Actor> novedades(Timestamp fecha) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

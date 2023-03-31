@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo.domains.core.repositories.contracts.RepositoryWithProjections;
-import com.example.demo.domains.entities.dtos.ActorShort;
 import com.example.demo.domains.entities.Actor;
+import com.example.demo.domains.entities.dtos.ActorShort;
 
 //Mediante la extensión de JpaSpecificationExecute podemos hacer consultas directamente
 //usanod especificaciones

@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import com.example.demo.domains.contracts.services.ActorService;
+import com.example.demo.domains.entities.Actor;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -108,8 +107,8 @@ public class DemoApplication implements CommandLineRunner {
 //			return null;
 //		}).forEach(System.out::println);
 		
-		
-		//Updateing branch
+		srv.add(new Actor (0, "Jesus", "GERMAN"));
+
 	}
 
 }

@@ -1,11 +1,9 @@
-package com.example.demo.domains.entities.dtos;
+package com.example.domains.entities.dtos;
 
-import com.example.demo.domains.entities.Actor;
+import com.example.domains.entities.Actor;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Value;
-
-//@Data @AllArgsConstructor @NoArgsConstructor
 
 @Value
 public class ActorDTO {
