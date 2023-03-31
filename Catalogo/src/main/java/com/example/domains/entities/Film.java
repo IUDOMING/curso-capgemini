@@ -1,7 +1,6 @@
 package com.example.domains.entities;
 
 import java.io.Serializable;
-<<<<<<< HEAD
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -84,23 +83,6 @@ public class Film extends EntityBase<Film> implements Serializable {
 		}
 	}
 
-=======
-import jakarta.persistence.*;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.List;
-
-/**
- * The persistent class for the film database table.
- * 
- */
-@Entity
-@Table(name = "film")
-@NamedQuery(name = "Film.findAll", query = "SELECT f FROM Film f")
-public class Film implements Serializable {
-	private static final long serialVersionUID = 1L;
-
->>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "film_id", unique = true, nullable = false)
@@ -112,7 +94,6 @@ public class Film implements Serializable {
 	@Column(name = "last_update", insertable = false, updatable = false, nullable = false)
 	private Timestamp lastUpdate;
 
-<<<<<<< HEAD
 	@Positive
 	private Integer length;
 
@@ -141,36 +122,13 @@ public class Film implements Serializable {
 
 	@NotBlank
 	@Size(max = 128)
-=======
-	private int length;
-
-	@Column(length = 1)
-	private String rating;
-
-	@Column(name = "release_year")
-	private Short releaseYear;
-
-	@Column(name = "rental_duration", nullable = false)
-	private byte rentalDuration;
-
-	@Column(name = "rental_rate", nullable = false, precision = 10, scale = 2)
-	private BigDecimal rentalRate;
-
-	@Column(name = "replacement_cost", nullable = false, precision = 10, scale = 2)
-	private BigDecimal replacementCost;
-
->>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	@Column(nullable = false, length = 128)
 	private String title;
 
 	// bi-directional many-to-one association to Language
 	@ManyToOne
-<<<<<<< HEAD
 	@JoinColumn(name = "language_id")
 	@NotNull
-=======
-	@JoinColumn(name = "language_id", nullable = false)
->>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	private Language language;
 
 	// bi-directional many-to-one association to Language
@@ -179,7 +137,6 @@ public class Film implements Serializable {
 	private Language languageVO;
 
 	// bi-directional many-to-one association to FilmActor
-<<<<<<< HEAD
 	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<FilmActor> filmActors = new ArrayList<FilmActor>();
@@ -228,14 +185,6 @@ public class Film implements Serializable {
 		this.length = length;
 		this.replacementCost = replacementCost;
 	}
-=======
-	@OneToMany(mappedBy = "film")
-	private List<FilmActor> filmActors;
-
-	// bi-directional many-to-one association to FilmCategory
-	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<FilmCategory> filmCategories;
->>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 
 	public int getFilmId() {
 		return this.filmId;
@@ -243,7 +192,6 @@ public class Film implements Serializable {
 
 	public void setFilmId(int filmId) {
 		this.filmId = filmId;
-<<<<<<< HEAD
 		if (filmActors != null && filmActors.size() > 0)
 			filmActors.forEach(item -> {
 				if (item.getId().getFilmId() != filmId)
@@ -254,8 +202,6 @@ public class Film implements Serializable {
 				if (item.getId().getFilmId() != filmId)
 					item.getId().setFilmId(filmId);
 			});
-=======
->>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	}
 
 	public String getDescription() {
@@ -274,7 +220,6 @@ public class Film implements Serializable {
 		this.lastUpdate = lastUpdate;
 	}
 
-<<<<<<< HEAD
 	public Integer getLength() {
 		return this.length;
 	}
@@ -288,21 +233,6 @@ public class Film implements Serializable {
 	}
 
 	public void setRating(Rating rating) {
-=======
-	public int getLength() {
-		return this.length;
-	}
-
-	public void setLength(int length) {
-		this.length = length;
-	}
-
-	public String getRating() {
-		return this.rating;
-	}
-
-	public void setRating(String rating) {
->>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 		this.rating = rating;
 	}
 
@@ -314,19 +244,11 @@ public class Film implements Serializable {
 		this.releaseYear = releaseYear;
 	}
 
-<<<<<<< HEAD
 	public Byte getRentalDuration() {
 		return this.rentalDuration;
 	}
 
 	public void setRentalDuration(Byte rentalDuration) {
-=======
-	public byte getRentalDuration() {
-		return this.rentalDuration;
-	}
-
-	public void setRentalDuration(byte rentalDuration) {
->>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 		this.rentalDuration = rentalDuration;
 	}
 
@@ -370,7 +292,6 @@ public class Film implements Serializable {
 		this.languageVO = languageVO;
 	}
 
-<<<<<<< HEAD
 	// Métodos para la gestión de actores
 	// Adquirir actores
 	public List<Actor> getActors() {
@@ -489,50 +410,4 @@ public class Film implements Serializable {
 				.forEach(item -> target.addCategory(item));
 		return target;
 	}
-=======
-	public List<FilmActor> getFilmActors() {
-		return this.filmActors;
-	}
-
-	public void setFilmActors(List<FilmActor> filmActors) {
-		this.filmActors = filmActors;
-	}
-
-	public FilmActor addFilmActor(FilmActor filmActor) {
-		getFilmActors().add(filmActor);
-		filmActor.setFilm(this);
-
-		return filmActor;
-	}
-
-	public FilmActor removeFilmActor(FilmActor filmActor) {
-		getFilmActors().remove(filmActor);
-		filmActor.setFilm(null);
-
-		return filmActor;
-	}
-
-	public List<FilmCategory> getFilmCategories() {
-		return this.filmCategories;
-	}
-
-	public void setFilmCategories(List<FilmCategory> filmCategories) {
-		this.filmCategories = filmCategories;
-	}
-
-	public FilmCategory addFilmCategory(FilmCategory filmCategory) {
-		getFilmCategories().add(filmCategory);
-		filmCategory.setFilm(this);
-
-		return filmCategory;
-	}
-
-	public FilmCategory removeFilmCategory(FilmCategory filmCategory) {
-		getFilmCategories().remove(filmCategory);
-		filmCategory.setFilm(null);
-
-		return filmCategory;
-	}
-
->>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 }
