@@ -107,7 +107,7 @@ public class DemoApplication implements CommandLineRunner {
 //			return null;
 //		}).forEach(System.out::println);
 		
-		srv.add(new Actor (0, "Jesus", "GERMAN"));
+//		srv.add(new Actor (0, "Jesus", "GERMAN"));
 
 	}
 
