@@ -1,23 +1,37 @@
 package com.example.domains.core.entities;
 
+<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+=======
+import java.util.Set;
+
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 import jakarta.persistence.Transient;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 
+<<<<<<< HEAD
 public abstract class EntityBase<E> {
 
+=======
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+public abstract class EntityBase<E> {
+	
+	
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	@Transient
 	@JsonIgnore
 	@SuppressWarnings("unchecked")
 	public Set<ConstraintViolation<E>> getErrors() {
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+<<<<<<< HEAD
 		return validator.validate((E) this);
 	}
 
@@ -47,6 +61,22 @@ public abstract class EntityBase<E> {
 		return errors;
 	}
 
+=======
+		return validator.validate((E)this);
+	}
+	
+	@Transient
+	@JsonIgnore
+	public String getErrorsMessage() {
+		if(isValid()) return "";
+		StringBuilder sb = new StringBuilder("ERRORES: ");
+		//getErrors().forEach(item -> sb.append(item.getPropertyPath() + ": " + item.getMessage() + ". "));
+		getErrors().stream().map(item -> item.getPropertyPath() + ": " + item.getMessage() + ". ")
+		.sorted().forEach(sb::append);
+		return sb.toString().trim();
+	}
+	
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	@Transient
 	@JsonIgnore
 	public boolean isValid() {

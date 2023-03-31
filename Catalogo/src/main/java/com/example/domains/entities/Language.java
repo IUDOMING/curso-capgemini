@@ -1,6 +1,7 @@
 package com.example.domains.entities;
 
 import java.io.Serializable;
+<<<<<<< HEAD
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -54,11 +55,46 @@ public class Language extends EntityBase<Language> implements Serializable {
 	// bi-directional many-to-one association to Film
 	@OneToMany(mappedBy = "languageVO")
 	@JsonIgnore
+=======
+import jakarta.persistence.*;
+import java.sql.Timestamp;
+import java.util.List;
+
+
+/**
+ * The persistent class for the language database table.
+ * 
+ */
+@Entity
+@Table(name="language")
+@NamedQuery(name="Language.findAll", query="SELECT l FROM Language l")
+public class Language implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="language_id", unique=true, nullable=false)
+	private int languageId;
+
+	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
+	private Timestamp lastUpdate;
+
+	@Column(nullable=false, length=20)
+	private String name;
+
+	//bi-directional many-to-one association to Film
+	@OneToMany(mappedBy="language")
+	private List<Film> films;
+
+	//bi-directional many-to-one association to Film
+	@OneToMany(mappedBy="languageVO")
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	private List<Film> filmsVO;
 
 	public Language() {
 	}
 
+<<<<<<< HEAD
 	public Language(int languageId) {
 		this.languageId = languageId;
 	}
@@ -69,6 +105,8 @@ public class Language extends EntityBase<Language> implements Serializable {
 		this.name = name;
 	}
 
+=======
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	public int getLanguageId() {
 		return this.languageId;
 	}
@@ -137,6 +175,7 @@ public class Language extends EntityBase<Language> implements Serializable {
 		return filmsVO;
 	}
 
+<<<<<<< HEAD
 	@Override
 	public int hashCode() {
 		return Objects.hash(languageId);
@@ -159,4 +198,6 @@ public class Language extends EntityBase<Language> implements Serializable {
 		return "Language [languageId=" + languageId + ", name=" + name + "]";
 	}
 
+=======
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 }

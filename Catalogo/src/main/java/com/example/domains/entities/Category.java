@@ -3,6 +3,7 @@ package com.example.domains.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
@@ -39,16 +40,57 @@ public class Category extends EntityBase<Category> implements Serializable {
 	// bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy = "category")
 	@JsonIgnore
+=======
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+
+
+/**
+ * The persistent class for the category database table.
+ * 
+ */
+@Entity
+@Table(name="category")
+@NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
+public class Category implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="category_id", unique=true, nullable=false)
+	
+	@Max(255)
+	private int categoryId;
+
+	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
+	private Timestamp lastUpdate;
+
+	@Column(nullable=false, length=25)
+	private String name;
+
+	@OneToMany(mappedBy="category")
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	private List<FilmCategory> filmCategories;
 
 	public Category() {
 	}
 
+<<<<<<< HEAD
 	public Category(int categoryId) {
 		super();
 		this.categoryId = categoryId;
 	}
 
+=======
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	public int getCategoryId() {
 		return this.categoryId;
 	}
@@ -95,6 +137,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 		return filmCategory;
 	}
 
+<<<<<<< HEAD
 	@Override
 	public int hashCode() {
 		return Objects.hash(categoryId);
@@ -117,4 +160,6 @@ public class Category extends EntityBase<Category> implements Serializable {
 		return "Category [categoryId=" + categoryId + ", name=" + name + ", lastUpdate=" + lastUpdate + "]";
 	}
 
+=======
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 }

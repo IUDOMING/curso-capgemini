@@ -1,5 +1,6 @@
 package com.example.exceptions;
 
+<<<<<<< HEAD
 import java.util.Map;
 
 public class InvalidDataException extends Exception {
@@ -9,12 +10,18 @@ public class InvalidDataException extends Exception {
 	
 	public InvalidDataException() {
 		this(MESSAGE_STRING);
+=======
+public class InvalidDataException extends Exception {
+
+	public InvalidDataException() {
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	}
 
 	public InvalidDataException(String message) {
 		super(message);
 	}
 
+<<<<<<< HEAD
 	public InvalidDataException(Map<String, String> errors) {
 		this(MESSAGE_STRING, errors);
 	}
@@ -26,6 +33,10 @@ public class InvalidDataException extends Exception {
 
 	public InvalidDataException(Throwable cause) {
 		this(MESSAGE_STRING, cause);
+=======
+	public InvalidDataException(Throwable cause) {
+		super(cause);
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	}
 
 	public InvalidDataException(String message, Throwable cause) {
@@ -37,6 +48,7 @@ public class InvalidDataException extends Exception {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
+<<<<<<< HEAD
 	public InvalidDataException(Throwable cause, Map<String, String> errors) {
 		this(MESSAGE_STRING, cause, errors);
 	}
@@ -59,3 +71,6 @@ public class InvalidDataException extends Exception {
 	}
 
 }
+=======
+}
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978

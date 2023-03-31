@@ -8,15 +8,38 @@ import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
 
+<<<<<<< HEAD
 import jakarta.persistence.*;
+=======
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+<<<<<<< HEAD
 @Entity
 @Table(name = "actor")
 @NamedQuery(name = "Actor.findAll", query = "SELECT a FROM Actor a")
+=======
+/**
+ * The persistent class for the actor database table.
+ * 
+ */
+@Entity
+@Table(name = "actor")
+@NamedQuery(name = "Actor.findAll", query = "SELECT a FROM Actor a")
+
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 public class Actor extends EntityBase<Actor> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,14 +55,21 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 
 	@Column(name = "last_name", nullable = false, length = 45)
 	@Size(max = 45, min = 2)
+<<<<<<< HEAD
 	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayusculas")
+=======
+	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayúsculas")
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	private String lastName;
 
 	@Column(name = "last_update", insertable = false, updatable = false, nullable = false)
 	@PastOrPresent
 	private Timestamp lastUpdate;
 
+<<<<<<< HEAD
 	// bi-directional many-to-one association to FilmActor
+=======
+>>>>>>> 862e2d75bdfc08585e5d4099527348875a982978
 	@OneToMany(mappedBy = "actor", fetch = FetchType.LAZY)
 	private List<FilmActor> filmActors = new ArrayList<>();
 
