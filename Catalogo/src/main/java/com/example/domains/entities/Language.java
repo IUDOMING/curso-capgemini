@@ -15,6 +15,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+//General idea same as Category or Actors
+//Check those classes for commentation in case of doubt
+
 @Entity
 @Table(name = "language")
 @NamedQuery(name = "Language.findAll", query = "SELECT l FROM Language l")
