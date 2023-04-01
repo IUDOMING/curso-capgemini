@@ -4,13 +4,9 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-
-import com.example.domains.core.contracts.repositories.RepositoryWithProjections;
 import com.example.domains.entities.Language;
 
-public interface LanguageRepository
-		extends JpaRepository<Language, Integer>, JpaSpecificationExecutor<Language>, RepositoryWithProjections {
+public interface LanguageRepository extends JpaRepository<Language, Integer> {
 
 	List<Language> findByLastUpdateGreaterThanEqualOrderByLastUpdate(Timestamp fecha);
 }
