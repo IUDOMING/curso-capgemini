@@ -8,6 +8,6 @@ import com.example.domains.entities.Category;
 
 public interface CategoryService extends DomainService<Category, Integer> {
 
-	List<Category> novedades(Timestamp fecha);
+	List<Category> news(Timestamp fecha);
 
 }

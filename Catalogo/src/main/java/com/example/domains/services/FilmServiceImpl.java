@@ -107,7 +107,7 @@ public class FilmServiceImpl implements FilmServices {
 	}
 
 	@Override
-	public List<Film> novedades(@NonNull Timestamp date) {
+	public List<Film> news(@NonNull Timestamp date) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(date);
 	}
 

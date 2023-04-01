@@ -69,7 +69,7 @@ public class LanguageServiceImpl implements LanguageService {
 	}
 
 	@Override
-	public List<Language> novedades(Timestamp date) {
+	public List<Language> news(Timestamp date) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(date);
 	}
 

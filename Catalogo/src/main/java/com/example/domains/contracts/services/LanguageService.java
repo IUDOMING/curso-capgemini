@@ -8,6 +8,6 @@ import com.example.domains.entities.Language;
 
 public interface LanguageService extends DomainService<Language, Integer> {
 
-	List<Language> novedades(Timestamp fecha);
+	List<Language> news(Timestamp fecha);
 
 }

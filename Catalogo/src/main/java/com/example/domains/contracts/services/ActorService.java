@@ -8,6 +8,6 @@ import com.example.domains.entities.Actor;
 
 public interface ActorService extends ProjectionDomainService<Actor, Integer> {
 
-	List<Actor> novedades(Timestamp fecha);
+	List<Actor> news(Timestamp fecha);
 
 }
