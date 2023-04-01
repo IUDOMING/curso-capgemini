@@ -24,12 +24,12 @@ public class CatalogoServiceImpl implements CatalogoService {
 	private LanguageService languageSrv;
 
 	@Override
-	public NovedadesDTO news(Timestamp fecha) {
-		if (fecha == null)
-			fecha = Timestamp.from(Instant.now().minusSeconds(36000));
-		return new NovedadesDTO(filmSrv.news(fecha).stream().map(item -> FilmEditDTO.from(item)).toList(),
-				artorSrv.news(fecha).stream().map(item -> ActorDTO.from(item)).toList(), categorySrv.news(fecha),
-				languageSrv.news(fecha));
+	public NovedadesDTO news(Timestamp date) {
+		if (date == null)
+			date = Timestamp.from(Instant.now().minusSeconds(36000));
+		return new NovedadesDTO(filmSrv.news(date).stream().map(item -> FilmEditDTO.from(item)).toList(),
+				artorSrv.news(date).stream().map(item -> ActorDTO.from(item)).toList(), categorySrv.news(date),
+				languageSrv.news(date));
 	}
 
 }
