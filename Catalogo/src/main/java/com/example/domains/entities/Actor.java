@@ -44,7 +44,7 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	@Column(name = "last_name", nullable = false, length = 45)
 	@Size(max = 45, min = 2)
 	// Sets a pattern for that element
-	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayusculas")
+	@Pattern(regexp = "[A-Z]+", message = "Must be uppercase")
 	private String lastName;
 
 	@Column(name = "last_update", insertable = false, updatable = false, nullable = false)
