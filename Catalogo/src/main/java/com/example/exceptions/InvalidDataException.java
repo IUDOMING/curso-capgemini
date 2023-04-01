@@ -6,7 +6,7 @@ public class InvalidDataException extends Exception {
 	private static final long serialVersionUID = 1L;
 	private final static String MESSAGE_STRING = "Invalid data";
 	private Map<String, String> errors = null;
-	
+
 	public InvalidDataException() {
 		this(MESSAGE_STRING);
 	}
@@ -52,7 +52,9 @@ public class InvalidDataException extends Exception {
 		this.errors = errors;
 	}
 
-	public boolean hasErrors() { return errors != null; }
+	public boolean hasErrors() {
+		return errors != null;
+	}
 
 	public Map<String, String> getErrors() {
 		return errors;
