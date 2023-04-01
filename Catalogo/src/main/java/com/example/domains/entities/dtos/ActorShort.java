@@ -8,6 +8,6 @@ public interface ActorShort {
 
 	@Value("#{target.firstName + ' ' + target.lastName}")
 
-	String getNombre();
+	String getName();
 
 }
