@@ -11,19 +11,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.domains.contracts.repository.ActorRepository;
-import com.example.domains.contracts.services.ActorService;
-import com.example.domains.entities.Actor;
+import com.example.domains.contracts.repository.FilmRepository;
+import com.example.domains.contracts.services.FilmServices;
+import com.example.domains.entities.Film;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
+import jakarta.transaction.Transactional;
 import lombok.NonNull;
 
 @Service
-public class ActorServiceImpl implements ActorService {
+public class FilmServiceImpl implements FilmServices {
 
 	@Autowired
-	private ActorRepository dao;
+	private FilmRepository dao;
 
 	@Override
 	public <T> List<T> getByProjection(Class<T> type) {
@@ -41,53 +42,61 @@ public class ActorServiceImpl implements ActorService {
 	}
 
 	@Override
-	public Iterable<Actor> getAll(Sort sort) {
+	public Iterable<Film> getAll(Sort sort) {
 		return dao.findAll(sort);
 	}
 
 	@Override
-	public Page<Actor> getAll(Pageable pageable) {
+	public Page<Film> getAll(Pageable pageable) {
 		return dao.findAll(pageable);
 	}
 
 	@Override
-	public List<Actor> getAll() {
+	public List<Film> getAll() {
 		return dao.findAll();
 	}
 
 	@Override
-	public Optional<Actor> getOne(Integer id) {
+	public Optional<Film> getOne(Integer id) {
 		return dao.findById(id);
 	}
 
 	@Override
-	public Actor add(Actor item) throws DuplicateKeyException, InvalidDataException {
+	public Film add(Film item) throws DuplicateKeyException, InvalidDataException {
 		if (item == null)
 			throw new InvalidDataException("Can't be null");
 		if (item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
-		if (dao.existsById(item.getActorId()))
+		if (dao.existsById(item.getFilmId()))
 			throw new DuplicateKeyException(item.getErrorsMessage());
-		return dao.save(item);
+		var actores = item.getActors();
+		var categorias = item.getCategories();
+		item.clearActors();
+		item.clearCategories();
+		var newItem = dao.save(item);
+		newItem.setActors(actores);
+		newItem.setCategories(categorias);
+		return dao.save(newItem);
 	}
 
 	@Override
-	public Actor modify(Actor item) throws NotFoundException, InvalidDataException {
-		if (item == null)
-			throw new InvalidDataException("No puede ser nulo");
-		if (item.isInvalid())
+	@Transactional
+	public Film modify(Film item) throws NotFoundException, InvalidDataException {
+		if(item == null)
+			throw new InvalidDataException("Can't be null");
+		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
-		if (dao.existsById(item.getActorId()))
+		var read = dao.findById(item.getFilmId());
+		if(read.isEmpty())
 			throw new NotFoundException();
-		return dao.save(item);
-
+		return dao.save(item.merge(read.get()));
 	}
 
 	@Override
-	public void delete(Actor item) throws InvalidDataException {
+	public void delete(Film item) throws InvalidDataException {
 		if (item == null)
-			throw new InvalidDataException("No puede ser nulo");
-		deleteById(item.getActorId());
+			throw new InvalidDataException("Can't be null");
+		deleteById(item.getFilmId());
 
 	}
 
@@ -98,7 +107,7 @@ public class ActorServiceImpl implements ActorService {
 	}
 
 	@Override
-	public List<Actor> novedades(@NonNull Timestamp date) {
+	public List<Film> novedades(@NonNull Timestamp date) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(date);
 	}
 
