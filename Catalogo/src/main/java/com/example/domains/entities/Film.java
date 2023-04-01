@@ -26,6 +26,7 @@ import jakarta.validation.constraints.Size;
 public class Film extends EntityBase<Film> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	//Creation of the Rating object for the the field of the Film.
 	public static enum Rating {
 		GENERAL_AUDIENCES("G"),
 		PARENTAL_GUIDANCE_SUGGESTED("PG"),
@@ -100,7 +101,9 @@ public class Film extends EntityBase<Film> implements Serializable {
 	@Convert(converter = RatingConverter.class)
 	private Rating rating;
 
+	//Gives a format to the JSonFormat.
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy")
+	// Sets minimum value. Specific dat since first film was made in 1895
 	@Min(1895)
 	@Column(name = "release_year")
 	private Short releaseYear;
@@ -146,6 +149,8 @@ public class Film extends EntityBase<Film> implements Serializable {
 	@JsonIgnore
 	private List<FilmCategory> filmCategories = new ArrayList<FilmCategory>();
 
+	//Film Constructors
+	
 	public Film() {
 	}
 
@@ -186,6 +191,8 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.replacementCost = replacementCost;
 	}
 
+	//Film getters and setters
+	
 	public int getFilmId() {
 		return this.filmId;
 	}
@@ -292,31 +299,33 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.languageVO = languageVO;
 	}
 
-	// Métodos para la gestión de actores
-	// Adquirir actores
+	// Method for the management of Actors
+	// Adquire actors
+	//A film can have several actors. So it have to return a List
 	public List<Actor> getActors() {
+		//Acces filmActors, that acces Actors to get the Actors related to the film
 		return this.filmActors.stream().map(item -> item.getActor()).toList();
 	}
 
-	// Asignar actores
+	// Asign Actors to a film
 	public void setActors(List<Actor> origin) {
 		if (filmActors == null || !filmActors.isEmpty())
 			clearActors();
 		origin.forEach(item -> addActor(item));
 	}
 
-	// Elimiar actores
+	// Delte actors from a film
 	public void clearActors() {
 		filmActors = new ArrayList<FilmActor>();
 	}
 
-	// Añadir objeto actor
+	// Add an object actor to the film
 	public void addActor(Actor actor) {
 		FilmActor filmActor = new FilmActor(this, actor);
 		filmActors.add(filmActor);
 	}
 
-	// Añadir actor mediante ID
+	// Add an actor by Id
 	public void addActor(int actorId) {
 		addActor(new Actor(actorId));
 	}
@@ -329,7 +338,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 		filmActors.remove(filmActor.get());
 	}
 
-	// Métodos para la gestión de Categorías
+	// Methdos for Category managament
 
 	public List<Category> getCategories() {
 		return this.filmCategories.stream().map(item -> item.getCategory()).toList();
@@ -379,7 +388,8 @@ public class Film extends EntityBase<Film> implements Serializable {
 		return filmId == other.filmId;
 	}
 
-	// Adición de actores y categorías a una película
+	// Method for adding Actors and Categories to a film
+	//Receive a a already existing.
 	public Film merge(Film target) {
 		target.title = title;
 		target.description = description;
@@ -392,20 +402,27 @@ public class Film extends EntityBase<Film> implements Serializable {
 		target.replacementCost = replacementCost;
 		target.rating = rating;
 		
-		// Los actores que no se encuentren en la lista antigua de actores, serán
-		// borrados
+		// Get the actors from the incoming edition of the film and compare to the
+		// already existing film
+		// Actors not found in the list will get deleted.
 		target.getActors().stream().filter(item -> !getActors().contains(item))
 				.forEach(item -> target.removeActor(item));
-
-		// Se añaden los nuevos actores
+		
+		// Get the actors from the incoming edition of the film and compare to the
+		// already existing film
+		// Add the new actors
 		getActors().stream().filter(item -> !target.getActors().contains(item))
 		.forEach(item -> target.addActor(item));
 
-		// Borra las categorías que sobren en la lista antigua.
+		// Get the categories from the incoming edition of the film and compare to the
+		// already existing film
+		// Delete the not found categories
 		target.getCategories().stream().filter(item -> !getCategories().contains(item))
 				.forEach(item -> target.removeCategory(item));
 
-		// Añade las nuevas categorías.
+		// Get the categories from the incoming edition of the film and compare to the
+		// already existing film
+		// Add the new categories
 		getCategories().stream().filter(item -> !target.getCategories().contains(item))
 				.forEach(item -> target.addCategory(item));
 		return target;

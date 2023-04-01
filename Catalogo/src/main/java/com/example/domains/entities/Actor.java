@@ -14,34 +14,50 @@ import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+//Creation Actor Object related to Actor Table
+
 @Entity
+//Name of the table in BBDD
 @Table(name = "actor")
 @NamedQuery(name = "Actor.findAll", query = "SELECT a FROM Actor a")
 public class Actor extends EntityBase<Actor> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	// Ceration of Object attributes
+
+	// Identifies PK (Primary Key)
 	@Id
+	// Sets generations strategies for PKs
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// Identifies the name of the field related to the Table plus info of the
+	// configurations
 	@Column(name = "actor_id", unique = true, nullable = false)
 	private int actorId;
 
 	@Column(name = "first_name", nullable = false, length = 45)
+	// Can't be empty, null and lenght > 0
 	@NotBlank
+	// Sets max and min size of the element
 	@Size(max = 45, min = 2)
 	private String firstName;
 
 	@Column(name = "last_name", nullable = false, length = 45)
 	@Size(max = 45, min = 2)
+	// Sets a pattern for that element
 	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayusculas")
 	private String lastName;
 
 	@Column(name = "last_update", insertable = false, updatable = false, nullable = false)
+	// Checks if time is Past or Present.
 	@PastOrPresent
 	private Timestamp lastUpdate;
 
 	// bi-directional many-to-one association to FilmActor
+	// Sets a relation
 	@OneToMany(mappedBy = "actor", fetch = FetchType.LAZY)
 	private List<FilmActor> filmActors = new ArrayList<>();
+
+	// Creation of constructors
 
 	public Actor() {
 	}
@@ -57,6 +73,8 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+
+	// Basic Getters and Setters
 
 	public int getActorId() {
 		return this.actorId;
@@ -98,6 +116,8 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 		this.filmActors = filmActors;
 	}
 
+	
+	
 	public FilmActor addFilmActor(FilmActor filmActor) {
 		getFilmActors().add(filmActor);
 		filmActor.setActor(this);
@@ -129,17 +149,11 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 		return actorId == other.actorId;
 	}
 
+	// Override of the method String, getting only the attributes we need.
 	@Override
 	public String toString() {
 		return "Actor [actorId=" + actorId + ", firstName=" + firstName + ", lastName=" + lastName + ", lastUpdate="
 				+ lastUpdate + "]";
 	}
 
-	public void jubilate() {
-
-	}
-
-	public void recibePremio(String premio) {
-
-	}
 }

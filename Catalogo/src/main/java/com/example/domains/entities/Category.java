@@ -14,33 +14,49 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
+//Creation Actor Object related to Actor Table
+
+
 @Entity
+//Name of the table in BBDD
 @Table(name = "category")
 @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
 public class Category extends EntityBase<Category> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	// Ceration of Object attributes
+
+	// Identifies PK (Primary Key)
 	@Id
+	// Sets generations strategies for PKs
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// Identifies the name of the field related to the Table plus info of the
+	// configurations
 	@Column(name = "category_id")
 	@JsonProperty("id")
 	private int categoryId;
 
 	@Column(name = "last_update", insertable = false, updatable = false)
+	// Checks if time is Past or Present.
 	@PastOrPresent
 	@JsonIgnore
 	private Timestamp lastUpdate;
 
+	// Can't be empty, null and lenght > 0
 	@NotBlank
+	// Sets max and min size of the element
 	@Size(max = 25)
 	@JsonProperty("categoria")
 	private String name;
 
 	// bi-directional many-to-one association to FilmCategory
+	// Sets a relation
 	@OneToMany(mappedBy = "category")
 	@JsonIgnore
 	private List<FilmCategory> filmCategories;
 
+	// Creation of constructors
+	
 	public Category() {
 	}
 
@@ -48,6 +64,8 @@ public class Category extends EntityBase<Category> implements Serializable {
 		super();
 		this.categoryId = categoryId;
 	}
+	
+	// Basic getters and setters
 
 	public int getCategoryId() {
 		return this.categoryId;
@@ -112,6 +130,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 		return categoryId == other.categoryId;
 	}
 
+	// Override of the method String, getting only the attributes we need.
 	@Override
 	public String toString() {
 		return "Category [categoryId=" + categoryId + ", name=" + name + ", lastUpdate=" + lastUpdate + "]";
