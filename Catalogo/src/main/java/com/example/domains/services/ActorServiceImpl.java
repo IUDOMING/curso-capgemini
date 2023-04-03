@@ -74,7 +74,7 @@ public class ActorServiceImpl implements ActorService {
 	@Override
 	public Actor modify(Actor item) throws NotFoundException, InvalidDataException {
 		if (item == null)
-			throw new InvalidDataException("No puede ser nulo");
+			throw new InvalidDataException("Can't be null");
 		if (item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
 		if (dao.existsById(item.getActorId()))
@@ -86,7 +86,7 @@ public class ActorServiceImpl implements ActorService {
 	@Override
 	public void delete(Actor item) throws InvalidDataException {
 		if (item == null)
-			throw new InvalidDataException("No puede ser nulo");
+			throw new InvalidDataException("Can't be null");
 		deleteById(item.getActorId());
 
 	}
