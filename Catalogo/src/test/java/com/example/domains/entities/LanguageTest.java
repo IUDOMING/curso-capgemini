@@ -14,7 +14,7 @@ class LanguageTest {
 		assertTrue(fixture.isValid());
 	}
 
-	@DisplayName("Language must be between 2 and 20. Can't be blank.")
+	@DisplayName("Language must be between 0 and 20. Can't be blank.")
 	@ParameterizedTest(name = "language: -{0}- -> {1}")
 	@CsvSource(value = { "'','ERRORES: name: must not be blank.'", "' ','ERRORES: name: must not be blank.'",
 			"'   ','ERRORES: name: must not be blank.'",
