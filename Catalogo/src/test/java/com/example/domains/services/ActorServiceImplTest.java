@@ -1,7 +1,7 @@
 package com.example.domains.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -23,6 +23,7 @@ import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
+import com.example.exceptions.NotFoundException;
 
 @DataJpaTest
 @ComponentScan(basePackages = "com.example")
@@ -36,8 +37,8 @@ class ActorServiceImplTest {
 
 	@Test
 	void testGetAll_isNotEmpty() {
-		List<Actor> lista = new ArrayList<>(Arrays.asList(new Actor(1, "Pepito", "GRILLO"),
-				new Actor(2, "Carmelo", "COTON"), new Actor(3, "Capitan", "TAN")));
+		List<Actor> lista = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
+				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
 
 		when(dao.findAll()).thenReturn(lista);
 		var rslt = srv.getAll();
@@ -46,8 +47,8 @@ class ActorServiceImplTest {
 
 	@Test
 	void testGetOne_valid() {
-		List<Actor> lista = new ArrayList<>(Arrays.asList(new Actor(1, "Pepito", "GRILLO"),
-				new Actor(2, "Carmelo", "COTON"), new Actor(3, "Capitan", "TAN")));
+		List<Actor> lista = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
+				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
 
 		when(dao.findById(1)).thenReturn(Optional.of(new Actor(1, "Pepito", "GRILLO")));
 		var rslt = srv.getOne(1);
@@ -69,5 +70,24 @@ class ActorServiceImplTest {
 		assertThrows(InvalidDataException.class, () -> srv.add(null));
 		verify(dao, times(0)).save(null);
 	}
+
+	@Test
+	void testModify() throws NotFoundException, InvalidDataException {
+		when(dao.save(any(Actor.class))).thenReturn(null, null);
+		assertThrows(InvalidDataException.class, () -> srv.modify(null));
+		verify(dao, times(0)).save(null);
+	}
+	
+	@Test
+	void testDelete() throws InvalidDataException {
+		Actor act = new Actor(202, "Demo", "GRILLADO");
+		assertThrows(InvalidDataException.class, () -> srv.delete(null));
+	}
+
+//	@Test
+//	void testDeleteById() {
+//		fail("Not yet implemented");
+//	}
+
 
 }
