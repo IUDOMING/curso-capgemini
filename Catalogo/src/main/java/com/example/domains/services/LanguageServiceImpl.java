@@ -23,7 +23,7 @@ public class LanguageServiceImpl implements LanguageService {
 
 	@Override
 	public List<Language> getAll() {
-		return dao.findAll(Sort.by("name"));
+		return dao.findAll();
 	}
 
 	@Override

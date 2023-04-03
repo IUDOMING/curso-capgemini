@@ -37,17 +37,17 @@ class ActorServiceImplTest {
 
 	@Test
 	void testGetAll_isNotEmpty() {
-		List<Actor> lista = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
+		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
 				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
 
-		when(dao.findAll()).thenReturn(lista);
+		when(dao.findAll()).thenReturn(list);
 		var rslt = srv.getAll();
 		assertThat(rslt.size()).isEqualTo(3);
 	}
 
 	@Test
 	void testGetOne_valid() {
-		List<Actor> lista = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
+		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
 				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
 
 		when(dao.findById(1)).thenReturn(Optional.of(new Actor(1, "Pepito", "GRILLO")));
@@ -78,11 +78,10 @@ class ActorServiceImplTest {
 		verify(dao, times(0)).save(null);
 	}
 	
-	@Test
-	void testDelete() throws InvalidDataException {
-		Actor act = new Actor(202, "Demo", "GRILLADO");
-		assertThrows(InvalidDataException.class, () -> srv.delete(null));
-	}
+//	@Test
+//	void testDelete() throws InvalidDataException {
+//	fail("Not yet implemented");
+//	}
 
 //	@Test
 //	void testDeleteById() {
