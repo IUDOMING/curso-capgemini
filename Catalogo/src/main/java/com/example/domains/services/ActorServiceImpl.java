@@ -77,7 +77,7 @@ public class ActorServiceImpl implements ActorService {
 			throw new InvalidDataException("Can't be null");
 		if (item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
-		if (dao.existsById(item.getActorId()))
+		if (getOne(item.getActorId()).isEmpty())
 			throw new NotFoundException();
 		return dao.save(item);
 
