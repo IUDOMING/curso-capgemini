@@ -21,6 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
 import com.example.domains.contracts.repository.ActorRepository;
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
+import com.example.domains.entities.Category;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
@@ -50,7 +51,7 @@ class ActorServiceImplTest {
 		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
 				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
 
-		when(dao.findById(1)).thenReturn(Optional.of(new Actor(1, "Pepito", "GRILLO")));
+		when(dao.findById(1)).thenReturn(Optional.of(new Actor(1, "Fraiz", "FRANK")));
 		var rslt = srv.getOne(1);
 		assertThat(rslt.isPresent()).isTrue();
 
@@ -78,15 +79,31 @@ class ActorServiceImplTest {
 		verify(dao, times(0)).save(null);
 	}
 	
-//	@Test
-//	void testDelete() throws InvalidDataException {
-//	fail("Not yet implemented");
-//	}
+	@Test
+	void testDelete() throws InvalidDataException {
+		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
+				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
 
-//	@Test
-//	void testDeleteById() {
-//		fail("Not yet implemented");
-//	}
+		when(dao.findAll()).thenReturn(list);
+		dao.delete(new Actor(1, "Fraiz", "FRANK"));
+		var rslt = srv.getOne(2);
+
+		assertThat(rslt.isPresent()).isFalse();
+
+	}
+
+	@Test
+	void testDeleteById() {
+		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
+				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
+		
+		when(dao.findAll()).thenReturn(list);
+		dao.deleteById(3);
+		var rslt = srv.getOne(3);
+		assertThat(rslt.isPresent()).isFalse();
+		
+		
+	}
 
 
 }
