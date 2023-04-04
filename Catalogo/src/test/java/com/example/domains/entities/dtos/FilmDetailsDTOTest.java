@@ -40,8 +40,6 @@ class FilmDetailsDTOTest {
 				() -> assertEquals(new Language(5), filmDTO.getLanguageVO())
 				);
 	}
-
-	//conversión de FilmDTO a Film
 	
 	@Test
 	void testFromFilmDTO() {
