@@ -103,7 +103,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 
 	//Gives a format to the JSonFormat.
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy")
-	// Sets minimum value. Specific dat since first film was made in 1895
+	// Sets minimum value. Specific date since first film was made in 1895
 	@Min(1895)
 	@Column(name = "release_year")
 	private Short releaseYear;
