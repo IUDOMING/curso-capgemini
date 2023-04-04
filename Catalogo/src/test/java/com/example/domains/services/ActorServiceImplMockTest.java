@@ -18,28 +18,28 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.example.domains.contracts.repository.LanguageRepository;
-import com.example.domains.contracts.services.LanguageService;
-import com.example.domains.entities.Language;
+import com.example.domains.contracts.repository.ActorRepository;
+import com.example.domains.contracts.services.ActorService;
+import com.example.domains.entities.Actor;
+import com.example.domains.entities.Category;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
 @DataJpaTest
 @ComponentScan(basePackages = "com.example")
-class LanguageServiceImplTest {
+class ActorServiceImplMockTest {
+
 	@MockBean
-	LanguageRepository dao;
+	ActorRepository dao;
 
 	@Autowired
-	LanguageService srv;
+	ActorService srv;
 
 	@Test
 	void testGetAll_isNotEmpty() {
-		List<Language> list = new ArrayList<>(
-				Arrays.asList(new Language(1, "Alemán"), 
-						new Language(2, "Castellano"), 
-						new Language(3, "Chino")));
+		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
+				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
 
 		when(dao.findAll()).thenReturn(list);
 		var rslt = srv.getAll();
@@ -48,12 +48,11 @@ class LanguageServiceImplTest {
 
 	@Test
 	void testGetOne_valid() {
-		List<Language> list = new ArrayList<>(
-				Arrays.asList(new Language(1, "Alemán"), 
-						new Language(2, "Castellano"), 
-						new Language(3, "Chino")));
-		when(dao.findById(3)).thenReturn(Optional.of(new Language(3, "Chino")));
-		var rslt = srv.getOne(3);
+		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
+				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
+
+		when(dao.findById(1)).thenReturn(Optional.of(new Actor(1, "Fraiz", "FRANK")));
+		var rslt = srv.getOne(1);
 		assertThat(rslt.isPresent()).isTrue();
 
 	}
@@ -68,27 +67,25 @@ class LanguageServiceImplTest {
 
 	@Test
 	void testAdd() throws DuplicateKeyException, InvalidDataException {
-		when(dao.save(any(Language.class))).thenReturn(null, null);
+		when(dao.save(any(Actor.class))).thenReturn(null, null);
 		assertThrows(InvalidDataException.class, () -> srv.add(null));
 		verify(dao, times(0)).save(null);
 	}
 
 	@Test
 	void testModify() throws NotFoundException, InvalidDataException {
-		when(dao.save(any(Language.class))).thenReturn(null, null);
+		when(dao.save(any(Actor.class))).thenReturn(null, null);
 		assertThrows(InvalidDataException.class, () -> srv.modify(null));
 		verify(dao, times(0)).save(null);
 	}
-
+	
 	@Test
 	void testDelete() throws InvalidDataException {
-		List<Language> list = new ArrayList<>(
-				Arrays.asList(new Language(1, "Alemán"), 
-						new Language(2, "Castellano"), 
-						new Language(3, "Chino")));
+		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
+				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
 
 		when(dao.findAll()).thenReturn(list);
-		dao.delete(new Language(2, "Castellano"));
+		dao.delete(new Actor(1, "Fraiz", "FRANK"));
 		var rslt = srv.getOne(2);
 
 		assertThat(rslt.isPresent()).isFalse();
@@ -97,10 +94,8 @@ class LanguageServiceImplTest {
 
 	@Test
 	void testDeleteById() {
-		List<Language> list = new ArrayList<>(
-				Arrays.asList(new Language(1, "Alemán"), 
-						new Language(2, "Castellano"), 
-						new Language(3, "Chino")));
+		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
+				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
 		
 		when(dao.findAll()).thenReturn(list);
 		dao.deleteById(3);
@@ -109,5 +104,6 @@ class LanguageServiceImplTest {
 		
 		
 	}
+
 
 }

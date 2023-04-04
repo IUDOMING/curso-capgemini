@@ -30,7 +30,7 @@ import com.example.exceptions.NotFoundException;
 
 @DataJpaTest
 @ComponentScan(basePackages = "com.example")
-class FilmServiceImplTest {
+class FilmServiceImplMockTest {
 
 	@MockBean
 	FilmRepository dao;
@@ -41,9 +41,9 @@ class FilmServiceImplTest {
 	@Test
 	void testGetAll_isNotEmpty() {
 		List<Film> list = new ArrayList<>(
-				Arrays.asList(new Film("Hola mundo", new Language(2), (byte)1, new BigDecimal(10.0), 1, new BigDecimal(10.0)),
-						new Film("Hola mundo", new Language(2), (byte)1, new BigDecimal(10.0), 1, new BigDecimal(10.0)), 
-						new Film("Hola mundo", new Language(2), (byte)1, new BigDecimal(10.0), 1, new BigDecimal(10.0))));
+				Arrays.asList(new Film("Hola mundo", new Language(1), (byte)2, new BigDecimal(20.0), 230, new BigDecimal(50.0)),
+						new Film("Adios mundo", new Language(2), (byte)1, new BigDecimal(10.0), 120, new BigDecimal(40.0)), 
+						new Film("Pausado mundo", new Language(3), (byte)3, new BigDecimal(40.0), 80, new BigDecimal(30.0))));
 
 		when(dao.findAll()).thenReturn(list);
 		var rslt = srv.getAll();
@@ -53,12 +53,12 @@ class FilmServiceImplTest {
 	@Test
 	void testGetOne_valid() {
 		List<Film> list = new ArrayList<>(
-				Arrays.asList(new Film(1, "Fraiz", "FRANK", null, null, null, null, null, null, null, null),
-						new Film(2, "Samuel", "JACKSON", null, null, null, null, null, null, null, null),
-						new Film(3, "Varios", "ALEATORIOS", null, null, null, null, null, null, null, null)));
+				Arrays.asList(new Film("Hola mundo", new Language(1), (byte)2, new BigDecimal(20.0), 230, new BigDecimal(50.0)),
+						new Film("Adios mundo", new Language(2), (byte)1, new BigDecimal(10.0), 120, new BigDecimal(40.0)), 
+						new Film("Pausado mundo", new Language(3), (byte)3, new BigDecimal(40.0), 80, new BigDecimal(30.0))));
 
 		when(dao.findById(1))
-				.thenReturn(Optional.of(new Film(1, "Fraiz", "FRANK", null, null, null, null, null, null, null, null)));
+				.thenReturn(Optional.of(new Film("Hola mundo", new Language(2), (byte)1, new BigDecimal(10.0), 1, new BigDecimal(10.0))));
 		var rslt = srv.getOne(1);
 		assertThat(rslt.isPresent()).isTrue();
 
@@ -89,12 +89,12 @@ class FilmServiceImplTest {
 	@Test
 	void testDelete() throws InvalidDataException {
 		List<Film> list = new ArrayList<>(
-				Arrays.asList(new Film(1, "Fraiz", "FRANK", null, null, null, null, null, null, null, null),
-						new Film(2, "Samuel", "JACKSON", null, null, null, null, null, null, null, null),
-						new Film(3, "Varios", "ALEATORIOS", null, null, null, null, null, null, null, null)));
+				Arrays.asList(new Film("Hola mundo", new Language(1), (byte)2, new BigDecimal(20.0), 230, new BigDecimal(50.0)),
+						new Film("Adios mundo", new Language(2), (byte)1, new BigDecimal(10.0), 120, new BigDecimal(40.0)), 
+						new Film("Pausado mundo", new Language(3), (byte)3, new BigDecimal(40.0), 80, new BigDecimal(30.0))));
 
 		when(dao.findAll()).thenReturn(list);
-		dao.delete(new Film(1, "Fraiz", "FRANK", null, null, null, null, null, null, null, null));
+		dao.delete(new Film("Hola mundo", new Language(2), (byte)1, new BigDecimal(10.0), 1, new BigDecimal(10.0)));
 		var rslt = srv.getOne(2);
 
 		assertThat(rslt.isPresent()).isFalse();
@@ -104,10 +104,10 @@ class FilmServiceImplTest {
 	@Test
 	void testDeleteById() {
 		List<Film> list = new ArrayList<>(
-				Arrays.asList(new Film(1, "Fraiz", "FRANK", null, null, null, null, null, null, null, null),
-						new Film(2, "Samuel", "JACKSON", null, null, null, null, null, null, null, null),
-						new Film(3, "Varios", "ALEATORIOS", null, null, null, null, null, null, null, null)));
-
+				Arrays.asList(new Film("Hola mundo", new Language(1), (byte)2, new BigDecimal(20.0), 230, new BigDecimal(50.0)),
+						new Film("Adios mundo", new Language(2), (byte)1, new BigDecimal(10.0), 120, new BigDecimal(40.0)), 
+						new Film("Pausado mundo", new Language(3), (byte)3, new BigDecimal(40.0), 80, new BigDecimal(30.0))));
+		
 		when(dao.findAll()).thenReturn(list);
 		dao.deleteById(3);
 		var rslt = srv.getOne(3);

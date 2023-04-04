@@ -18,9 +18,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.example.domains.contracts.repository.CategoryRepository;
-import com.example.domains.contracts.services.CategoryService;
-import com.example.domains.entities.Category;
+import com.example.domains.contracts.repository.LanguageRepository;
+import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.Language;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
@@ -28,21 +27,20 @@ import com.example.exceptions.NotFoundException;
 
 @DataJpaTest
 @ComponentScan(basePackages = "com.example")
-class CategoryServiceImplTest {
-	
+class LanguageServiceImplMockTest {
 	@MockBean
-	CategoryRepository dao;
+	LanguageRepository dao;
 
 	@Autowired
-	CategoryService srv;
+	LanguageService srv;
 
 	@Test
 	void testGetAll_isNotEmpty() {
-		List<Category> list = new ArrayList<>(
-				Arrays.asList(new Category(1, "Acción"),
-				new Category(2, "Terror"),
-				new Category(3, "Otros")));
-		
+		List<Language> list = new ArrayList<>(
+				Arrays.asList(new Language(1, "Alemán"), 
+						new Language(2, "Castellano"), 
+						new Language(3, "Chino")));
+
 		when(dao.findAll()).thenReturn(list);
 		var rslt = srv.getAll();
 		assertThat(rslt.size()).isEqualTo(3);
@@ -50,12 +48,11 @@ class CategoryServiceImplTest {
 
 	@Test
 	void testGetOne_valid() {
-		List<Category> list = new ArrayList<>(
-				Arrays.asList(new Category(1, "Acción"),
-				new Category(2, "Terror"),
-				new Category(3, "Otros")));
-		
-		when(dao.findById(3)).thenReturn(Optional.of(new Category(3, "Otros")));
+		List<Language> list = new ArrayList<>(
+				Arrays.asList(new Language(1, "Alemán"), 
+						new Language(2, "Castellano"), 
+						new Language(3, "Chino")));
+		when(dao.findById(3)).thenReturn(Optional.of(new Language(3, "Chino")));
 		var rslt = srv.getOne(3);
 		assertThat(rslt.isPresent()).isTrue();
 
@@ -71,27 +68,27 @@ class CategoryServiceImplTest {
 
 	@Test
 	void testAdd() throws DuplicateKeyException, InvalidDataException {
-		when(dao.save(any(Category.class))).thenReturn(null, null);
+		when(dao.save(any(Language.class))).thenReturn(null, null);
 		assertThrows(InvalidDataException.class, () -> srv.add(null));
 		verify(dao, times(0)).save(null);
 	}
 
 	@Test
 	void testModify() throws NotFoundException, InvalidDataException {
-		when(dao.save(any(Category.class))).thenReturn(null, null);
+		when(dao.save(any(Language.class))).thenReturn(null, null);
 		assertThrows(InvalidDataException.class, () -> srv.modify(null));
 		verify(dao, times(0)).save(null);
 	}
 
 	@Test
 	void testDelete() throws InvalidDataException {
-		List<Category> list = new ArrayList<>(
-				Arrays.asList(new Category(1, "Acción"),
-				new Category(2, "Terror"),
-				new Category(3, "Otros")));
+		List<Language> list = new ArrayList<>(
+				Arrays.asList(new Language(1, "Alemán"), 
+						new Language(2, "Castellano"), 
+						new Language(3, "Chino")));
 
 		when(dao.findAll()).thenReturn(list);
-		dao.delete(new Category(2, "Terror"));
+		dao.delete(new Language(2, "Castellano"));
 		var rslt = srv.getOne(2);
 
 		assertThat(rslt.isPresent()).isFalse();
@@ -100,10 +97,10 @@ class CategoryServiceImplTest {
 
 	@Test
 	void testDeleteById() {
-		List<Category> list = new ArrayList<>(
-				Arrays.asList(new Category(1, "Acción"),
-				new Category(2, "Terror"),
-				new Category(3, "Otros")));
+		List<Language> list = new ArrayList<>(
+				Arrays.asList(new Language(1, "Alemán"), 
+						new Language(2, "Castellano"), 
+						new Language(3, "Chino")));
 		
 		when(dao.findAll()).thenReturn(list);
 		dao.deleteById(3);

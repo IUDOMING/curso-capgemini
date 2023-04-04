@@ -1,109 +1,96 @@
 package com.example.domains.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.example.domains.contracts.repository.ActorRepository;
-import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
-import com.example.domains.entities.Category;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
-@DataJpaTest
+@SpringBootTest
 @ComponentScan(basePackages = "com.example")
 class ActorServiceImplTest {
 
-	@MockBean
-	ActorRepository dao;
-
 	@Autowired
-	ActorService srv;
+	ActorRepository dao;
+	
+	@Autowired
+	ActorServiceImpl srv;
 
 	@Test
-	void testGetAll_isNotEmpty() {
-		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
-				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
-
-		when(dao.findAll()).thenReturn(list);
-		var rslt = srv.getAll();
-		assertThat(rslt.size()).isEqualTo(3);
+	@DisplayName("getAll")
+	void testGetAll() {
+		assertThat(srv.getAll().size()).isGreaterThanOrEqualTo(200);
 	}
 
 	@Test
-	void testGetOne_valid() {
-		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
-				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
-
-		when(dao.findById(1)).thenReturn(Optional.of(new Actor(1, "Fraiz", "FRANK")));
-		var rslt = srv.getOne(1);
-		assertThat(rslt.isPresent()).isTrue();
-
-	}
-
-	@Test
-	void testGetOne_notfound() {
-		when(dao.findById(1)).thenReturn(Optional.empty());
-		var rslt = srv.getOne(1);
-		assertThat(rslt.isEmpty()).isTrue();
-
-	}
-
-	@Test
-	void testAdd() throws DuplicateKeyException, InvalidDataException {
-		when(dao.save(any(Actor.class))).thenReturn(null, null);
-		assertThrows(InvalidDataException.class, () -> srv.add(null));
-		verify(dao, times(0)).save(null);
-	}
-
-	@Test
-	void testModify() throws NotFoundException, InvalidDataException {
-		when(dao.save(any(Actor.class))).thenReturn(null, null);
-		assertThrows(InvalidDataException.class, () -> srv.modify(null));
-		verify(dao, times(0)).save(null);
+	@DisplayName("getOne")
+	void testGetOne() {
+		var item = srv.getOne(1);
+		assertTrue(item.isPresent());
 	}
 	
 	@Test
-	void testDelete() throws InvalidDataException {
-		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
-				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
-
-		when(dao.findAll()).thenReturn(list);
-		dao.delete(new Actor(1, "Fraiz", "FRANK"));
-		var rslt = srv.getOne(2);
-
-		assertThat(rslt.isPresent()).isFalse();
-
+	@DisplayName("Get not existent actor ")
+	void testGetOneNotFound() {
+		var item = srv.getOne(300);
+		assertFalse(item.isPresent());
 	}
+	
+	@Test
+	void testAdd() throws DuplicateKeyException, InvalidDataException {
+		
+		var fullSize = srv.getAll().size();
+		var actor = new Actor(0, "Jhon", "SNOW");
+		var result = srv.add(actor);
+		assertEquals(fullSize+1, srv.getAll().size());
+		srv.deleteById(result.getActorId());
+		
+	}
+		
+	
+	@Test
+	@Disabled
+	@DisplayName("Modify actor")
+	void testModify() throws NotFoundException, InvalidDataException {
+		// How to modify?
+		// You send to modify a modified actor...
+		// But it's not found on the DDBB
+	}
+
+
 
 	@Test
-	void testDeleteById() {
-		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
-				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
+	@DisplayName("Delete by id")
+	void testDeleteById() throws InvalidDataException, NotFoundException{
 		
-		when(dao.findAll()).thenReturn(list);
-		dao.deleteById(3);
-		var rslt = srv.getOne(3);
-		assertThat(rslt.isPresent()).isFalse();
-		
-		
+		var actor = new Actor(0, "Someone", "AGAIN");
+		var addedActorId = srv.add(actor).getActorId();
+		var originalSize = srv.getAll().size();
+		srv.deleteById(addedActorId);
+		assertEquals(originalSize-1, srv.getAll().size());
 	}
-
-
+	
+	@Test
+	@DisplayName("Delete by id not exists")
+	void testDeleteByIdNotExists() throws InvalidDataException, NotFoundException{
+		
+		var actor = new Actor(0, "But", "INDRECIBLE");
+		var addedActorId = srv.add(actor).getActorId();
+		var originalSize = srv.getAll().size();
+		srv.deleteById(addedActorId+1);
+		assertEquals(originalSize, srv.getAll().size());
+		srv.deleteById(addedActorId);
+	}
 }
