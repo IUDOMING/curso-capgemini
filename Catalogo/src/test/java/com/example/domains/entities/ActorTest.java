@@ -19,7 +19,8 @@ class ActorTest {
 	@ParameterizedTest(name = "fist name: -{0}- -> {1}")
 	@CsvSource(value = { "'','ERRORES: firstName: size must be between 2 and 45, must not be blank.'",
 			"' ','ERRORES: firstName: size must be between 2 and 45, must not be blank.'",
-			"'   ','ERRORES: firstName: must not be blank.'", "A,'ERRORES: firstName: size must be between 2 and 45.'",
+			"'   ','ERRORES: firstName: must not be blank.'",
+			"A,'ERRORES: firstName: size must be between 2 and 45.'",
 			"12345678901234567890123456789012345678901234567890,'ERRORES: firstName: size must be between 2 and 45.'" })
 	void testNameIsInvalid(String value, String error) {
 		var fixture = new Actor(0, value, "GRILLO");
@@ -31,7 +32,8 @@ class ActorTest {
 	@ParameterizedTest(name = "last name: -{0}- -> {1}")
 	@CsvSource(value = { "'','ERRORES: lastName: size must be between 2 and 45, Must be uppercase.'",
 			"' ','ERRORES: lastName: Must be uppercase, size must be between 2 and 45.'",
-			"'   ','ERRORES: lastName: Must be uppercase.'", "A,'ERRORES: lastName: size must be between 2 and 45.'",
+			"'   ','ERRORES: lastName: Must be uppercase.'",
+			"A,'ERRORES: lastName: size must be between 2 and 45.'",
 			"12345678901234567890123456789012345678901234567890,'ERRORES: lastName: size must be between 2 and 45, Must be uppercase.'" })
 	void testLastNameIsInvalid(String value, String error) {
 		var fixture = new Actor(0, "Sanz", value);
