@@ -62,7 +62,7 @@ class ActorServiceImplTest {
 	
 	@Test
 	@DisplayName("Modify actor")
-	@Disabled
+//	@Disabled
 	//Something is not working here
 	void testModify() throws NotFoundException, InvalidDataException {
 		var actor = new Actor(0, "Hola", "MUNDO");
