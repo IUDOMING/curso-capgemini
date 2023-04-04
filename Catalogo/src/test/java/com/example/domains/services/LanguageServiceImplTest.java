@@ -90,6 +90,7 @@ class LanguageServiceImplTest {
 		var rslt1 = srv.getOne(2);
 
 		assertThat(rslt1.isPresent()).isFalse();
+		
 
 	}
 
@@ -99,6 +100,14 @@ class LanguageServiceImplTest {
 				Arrays.asList(new Language(1, "Terror"),
 						new Language(2, "Acción"),
 						new Language(3, "Otros")));
+		
+		when(dao.findAll()).thenReturn(list);
+		dao.deleteById(3);
+		var rslt = srv.getAll();
+		var rslt1 = srv.getOne(3);
+		assertThat(rslt1.isPresent()).isFalse();
+		
+		
 
 		
 		
