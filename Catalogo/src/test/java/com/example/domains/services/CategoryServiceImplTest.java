@@ -21,6 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
 import com.example.domains.contracts.repository.CategoryRepository;
 import com.example.domains.contracts.services.CategoryService;
 import com.example.domains.entities.Category;
+import com.example.domains.entities.Language;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
@@ -37,8 +38,10 @@ class CategoryServiceImplTest {
 
 	@Test
 	void testGetAll_isNotEmpty() {
-		List<Category> list = new ArrayList<>(Arrays.asList(new Category(1, "Fraiz"),
-				new Category(2, "Samuel"), new Category(3, "Varios")));
+		List<Category> list = new ArrayList<>(
+				Arrays.asList(new Category(1, "Acción"),
+				new Category(2, "Terror"),
+				new Category(3, "Otros")));
 		
 		when(dao.findAll()).thenReturn(list);
 		var rslt = srv.getAll();
@@ -47,8 +50,10 @@ class CategoryServiceImplTest {
 
 	@Test
 	void testGetOne_valid() {
-		List<Category> list = new ArrayList<>(Arrays.asList(new Category(1, "Terror"),
-				new Category(2, "Acción"), new Category(3, "Otros")));
+		List<Category> list = new ArrayList<>(
+				Arrays.asList(new Category(1, "Acción"),
+				new Category(2, "Terror"),
+				new Category(3, "Otros")));
 		
 		when(dao.findById(3)).thenReturn(Optional.of(new Category(3, "Otros")));
 		var rslt = srv.getOne(3);
@@ -78,14 +83,34 @@ class CategoryServiceImplTest {
 		verify(dao, times(0)).save(null);
 	}
 
-//	@Test
-//	void testDelete() throws InvalidDataException {
-//	fail("Not yet implemented");
-//	}
+	@Test
+	void testDelete() throws InvalidDataException {
+		List<Category> list = new ArrayList<>(
+				Arrays.asList(new Category(1, "Acción"),
+				new Category(2, "Terror"),
+				new Category(3, "Otros")));
 
-//	@Test
-//	void testDeleteById() {
-//		fail("Not yet implemented");
-//	}
+		when(dao.findAll()).thenReturn(list);
+		dao.delete(new Category(2, "Terror"));
+		var rslt = srv.getOne(2);
+
+		assertThat(rslt.isPresent()).isFalse();
+
+	}
+
+	@Test
+	void testDeleteById() {
+		List<Category> list = new ArrayList<>(
+				Arrays.asList(new Category(1, "Acción"),
+				new Category(2, "Terror"),
+				new Category(3, "Otros")));
+		
+		when(dao.findAll()).thenReturn(list);
+		dao.deleteById(3);
+		var rslt = srv.getOne(3);
+		assertThat(rslt.isPresent()).isFalse();
+		
+		
+	}
 
 }

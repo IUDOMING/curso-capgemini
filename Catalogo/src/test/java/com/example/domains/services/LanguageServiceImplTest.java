@@ -37,7 +37,9 @@ class LanguageServiceImplTest {
 	@Test
 	void testGetAll_isNotEmpty() {
 		List<Language> list = new ArrayList<>(
-				Arrays.asList(new Language(1, "Terror"), new Language(2, "Acción"), new Language(3, "Otros")));
+				Arrays.asList(new Language(1, "Alemán"), 
+						new Language(2, "Castellano"), 
+						new Language(3, "Chino")));
 
 		when(dao.findAll()).thenReturn(list);
 		var rslt = srv.getAll();
@@ -47,9 +49,10 @@ class LanguageServiceImplTest {
 	@Test
 	void testGetOne_valid() {
 		List<Language> list = new ArrayList<>(
-				Arrays.asList(new Language(1, "Terror"), new Language(2, "Acción"), new Language(3, "Otros")));
-
-		when(dao.findById(3)).thenReturn(Optional.of(new Language(3, "Otros")));
+				Arrays.asList(new Language(1, "Alemán"), 
+						new Language(2, "Castellano"), 
+						new Language(3, "Chino")));
+		when(dao.findById(3)).thenReturn(Optional.of(new Language(3, "Chino")));
 		var rslt = srv.getOne(3);
 		assertThat(rslt.isPresent()).isTrue();
 
@@ -80,35 +83,29 @@ class LanguageServiceImplTest {
 	@Test
 	void testDelete() throws InvalidDataException {
 		List<Language> list = new ArrayList<>(
-				Arrays.asList(new Language(1, "Terror"),
-						new Language(2, "Acción"),
-						new Language(3, "Otros")));
+				Arrays.asList(new Language(1, "Alemán"), 
+						new Language(2, "Castellano"), 
+						new Language(3, "Chino")));
 
 		when(dao.findAll()).thenReturn(list);
-		dao.delete(new Language(2, "Terror"));
-		var rslt = srv.getAll();
-		var rslt1 = srv.getOne(2);
+		dao.delete(new Language(2, "Castellano"));
+		var rslt = srv.getOne(2);
 
-		assertThat(rslt1.isPresent()).isFalse();
-		
+		assertThat(rslt.isPresent()).isFalse();
 
 	}
 
 	@Test
 	void testDeleteById() {
 		List<Language> list = new ArrayList<>(
-				Arrays.asList(new Language(1, "Terror"),
-						new Language(2, "Acción"),
-						new Language(3, "Otros")));
+				Arrays.asList(new Language(1, "Alemán"), 
+						new Language(2, "Castellano"), 
+						new Language(3, "Chino")));
 		
 		when(dao.findAll()).thenReturn(list);
 		dao.deleteById(3);
-		var rslt = srv.getAll();
-		var rslt1 = srv.getOne(3);
-		assertThat(rslt1.isPresent()).isFalse();
-		
-		
-
+		var rslt = srv.getOne(3);
+		assertThat(rslt.isPresent()).isFalse();
 		
 		
 	}
