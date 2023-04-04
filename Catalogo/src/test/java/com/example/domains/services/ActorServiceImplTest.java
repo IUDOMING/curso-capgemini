@@ -3,9 +3,9 @@ package com.example.domains.services;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +42,8 @@ class ActorServiceImplTest {
 	}
 	
 	@Test
-	@DisplayName("Get not existent actor ")
-	void testGetOneNotFound() {
+	@DisplayName("Get non existent actor ")
+	void testNotFoundGet() {
 		var item = srv.getOne(300);
 		assertFalse(item.isPresent());
 	}
@@ -59,11 +59,25 @@ class ActorServiceImplTest {
 		
 	}
 		
+	@Test
+	@DisplayName("Modify null actor")
+	void testNullModify() throws NotFoundException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.modify(null));
+	}
 	
 	@Test
+	@DisplayName("Modify invalid actor")
+	void testInvalidModify() throws NotFoundException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.modify(new Actor(0," ","Invalid")));
+	}
+	
+	@Test
+	@DisplayName("Modify Not Found Actor")
+	void testNotFoundModify() throws NotFoundException, InvalidDataException {
+		assertThrows(NotFoundException.class, () -> srv.modify(new Actor(0,"Inexistent","WHERE")));
+	}
+	@Test
 	@DisplayName("Modify actor")
-//	@Disabled
-	//Something is not working here
 	void testModify() throws NotFoundException, InvalidDataException {
 		var actor = new Actor(0, "Hola", "MUNDO");
 		var adAct = srv.add(actor);
@@ -73,8 +87,6 @@ class ActorServiceImplTest {
 		assertEquals(actor.getActorId(), result.getActorId());
 		srv.deleteById(result.getActorId());
 	}
-
-
 
 	@Test
 	@DisplayName("Delete by id")
@@ -88,14 +100,20 @@ class ActorServiceImplTest {
 	}
 	
 	@Test
-	@DisplayName("Delete by id not exists")
-	void testDeleteByIdNotExists() throws InvalidDataException, NotFoundException{
+	@DisplayName("Delete by Non Existing Id")
+	void testDeleteByNonExistingId() throws InvalidDataException, NotFoundException{
 		
-		var actor = new Actor(0, "But", "INDRECIBLE");
-		var addedActorId = srv.add(actor).getActorId();
-		var originalSize = srv.getAll().size();
-		srv.deleteById(addedActorId+1);
-		assertEquals(originalSize, srv.getAll().size());
-		srv.deleteById(addedActorId);
+		var actor = new Actor(0, "Name", "ACTOR");
+		var addActId = srv.add(actor).getActorId();
+		var fullSize = srv.getAll().size();
+		srv.deleteById(addActId+1);
+		assertEquals(fullSize, srv.getAll().size());
+		srv.deleteById(addActId);
+	}
+	
+	@Test
+	@DisplayName("Delete null")
+	void testDelete() {
+		assertThrows(InvalidDataException.class, () -> srv.delete(null));
 	}
 }

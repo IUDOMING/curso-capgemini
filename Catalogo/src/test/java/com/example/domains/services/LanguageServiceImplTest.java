@@ -3,9 +3,9 @@ package com.example.domains.services;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +49,18 @@ class LanguageServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("Add null language")
+	void testNullAdd() throws DuplicateKeyException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.add(null));
+	}
+
+	@Test
+	@DisplayName("Add invalid language")
+	void testInvalidAdd() throws DuplicateKeyException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.add(new Language(0, "     ")));
+	}
+
+	@Test
 	@DisplayName("Add Language")
 	void testAdd() throws DuplicateKeyException, InvalidDataException {
 		var fullSize = srv.getAll().size();
@@ -57,6 +69,24 @@ class LanguageServiceImplTest {
 		assertEquals(fullSize + 1, srv.getAll().size());
 		srv.deleteById(result.getLanguageId());
 
+	}
+
+	@Test
+	@DisplayName("Modify null language")
+	void testNullModify() throws NotFoundException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.modify(null));
+	}
+
+	@Test
+	@DisplayName("Modify invalid language")
+	void testInvalidModify() throws NotFoundException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.modify(new Language(0, "     ")));
+	}
+
+	@Test
+	@DisplayName("Modify not found Language")
+	void testNotFoundModify() throws NotFoundException, InvalidDataException {
+		assertThrows(NotFoundException.class, () -> srv.modify(new Language(0, "NotFound")));
 	}
 
 	@Test
@@ -73,6 +103,12 @@ class LanguageServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("Delete null value")
+	void testNullDelete() {
+		assertThrows(InvalidDataException.class, () -> srv.delete(null));
+	}
+
+	@Test
 	@DisplayName("Delete by id")
 	void testDeleteById() throws InvalidDataException, NotFoundException {
 		var language = new Language(0, "Language to delete");
@@ -83,14 +119,14 @@ class LanguageServiceImplTest {
 	}
 
 	@Test
-	@DisplayName("Delete by id not exists")
-	void testDeleteByIdNotExists() throws InvalidDataException, NotFoundException {
+	@DisplayName("Delete by non existing ID")
+	void testNonExistingIdDelete() throws InvalidDataException, NotFoundException {
 
 		var language = new Language(0, "Language to delete");
-		var addedLanguageId = srv.add(language).getLanguageId();
-		var originalSize = srv.getAll().size();
-		srv.deleteById(addedLanguageId + 1);
-		assertEquals(originalSize, srv.getAll().size());
-		srv.deleteById(addedLanguageId);
+		var addLangId = srv.add(language).getLanguageId();
+		var fullSize = srv.getAll().size();
+		srv.deleteById(addLangId + 1);
+		assertEquals(fullSize, srv.getAll().size());
+		srv.deleteById(addLangId);
 	}
 }

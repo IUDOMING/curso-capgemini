@@ -58,6 +58,18 @@ class CategoryServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("Add null category")
+	void testNullAdd() throws DuplicateKeyException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.add(null));
+	}
+
+	@Test
+	@DisplayName("Add invalid category")
+	void testInvalidAdd() throws DuplicateKeyException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.add(new Category(0, " ")));
+	}
+
+	@Test
 	@DisplayName("Modify category")
 	void testModify() throws NotFoundException, InvalidDataException {
 		var category = new Category(0, "Category 1");
@@ -70,9 +82,21 @@ class CategoryServiceImplTest {
 	}
 
 	@Test
-	@DisplayName("Modify category not found")
-	void testModifyNotFound() throws NotFoundException, InvalidDataException {
-		assertThrows(NotFoundException.class, () -> srv.modify(new Category(0, "NotFound")));
+	@DisplayName("Null Modify Category")
+	void testNullModify() throws NotFoundException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.modify(null));
+	}
+
+	@Test
+	@DisplayName("Invalid Modify Category")
+	void testInvalidModify() throws NotFoundException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.modify(new Category(0, " ")));
+	}
+
+	@Test
+	@DisplayName("Not Found Modify Category")
+	void testNotFOundModify() throws NotFoundException, InvalidDataException {
+		assertThrows(NotFoundException.class, () -> srv.modify(new Category(0, "Not Found")));
 	}
 
 	@Test
@@ -84,6 +108,24 @@ class CategoryServiceImplTest {
 		var fullSize = srv.getAll().size();
 		srv.deleteById(addCatID);
 		assertEquals(fullSize - 1, srv.getAll().size());
+	}
+
+	@Test
+	@DisplayName("Delete Null")
+	void testNullDelete() {
+		assertThrows(InvalidDataException.class, () -> srv.delete(null));
+	}
+
+	@Test
+	@DisplayName("Delete by non existent ID")
+	void testNonExistDelete() throws InvalidDataException, NotFoundException {
+
+		var category = new Category(0, "Something");
+		var addCatID = srv.add(category).getCategoryId();
+		var fullSize = srv.getAll().size();
+		srv.deleteById(addCatID + 1);
+		assertEquals(fullSize, srv.getAll().size());
+		srv.deleteById(addCatID);
 	}
 
 }

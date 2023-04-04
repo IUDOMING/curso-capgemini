@@ -57,6 +57,18 @@ class FilmServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("Add null film")
+	void testNullAdd() throws DuplicateKeyException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.add(null));
+	}
+
+	@Test
+	@DisplayName("Add invalid film")
+	void testInvalidAdd() throws DuplicateKeyException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.add(new Film("     ", new Language(1))));
+	}
+
+	@Test
 	@DisplayName("Modify film")
 	void testModify() throws NotFoundException, InvalidDataException, DuplicateKeyException {
 
@@ -70,10 +82,21 @@ class FilmServiceImplTest {
 		srv.deleteById(result.getFilmId());
 	}
 
+	@Test
+	@DisplayName("Modify null film")
+	void testNullModify() throws NotFoundException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.modify(null));
+	}
 
 	@Test
-	@DisplayName("Modify film not found")
-	void testModifyNotFound() throws NotFoundException, InvalidDataException {
+	@DisplayName("Modify invalid film")
+	void testInvalidModify() throws NotFoundException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.modify(new Film(" ", new Language(0))));
+	}
+
+	@Test
+	@DisplayName("Modify not found film")
+	void testNotFoundModify() throws NotFoundException, InvalidDataException {
 		var film = new Film(0, "Film Title", "Description of the film", new Short("1990"), new Language(3),
 				new Language(5), (byte) 10, new BigDecimal(20), 230, new BigDecimal(20), Rating.GENERAL_AUDIENCES);
 		assertThrows(NotFoundException.class, () -> srv.modify(film));
@@ -92,8 +115,14 @@ class FilmServiceImplTest {
 	}
 
 	@Test
-	@DisplayName("Delete by id not exists")
-	void testDeleteByIdNotExists() throws InvalidDataException, NotFoundException, DuplicateKeyException {
+	@DisplayName("Delete null value")
+	void testNullDelete() {
+		assertThrows(InvalidDataException.class, () -> srv.delete(null));
+	}
+
+	@Test
+	@DisplayName("Delete by Non Existing Id")
+	void testDNonExistingIdDelete() throws InvalidDataException, NotFoundException, DuplicateKeyException {
 
 		var film = new Film(0, "Film Title", "Description of the film", new Short("1990"), new Language(3),
 				new Language(5), (byte) 10, new BigDecimal(20), 230, new BigDecimal(20), Rating.GENERAL_AUDIENCES);
