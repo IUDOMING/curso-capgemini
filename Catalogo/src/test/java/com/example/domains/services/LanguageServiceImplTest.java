@@ -36,7 +36,8 @@ class LanguageServiceImplTest {
 
 	@Test
 	void testGetAll_isNotEmpty() {
-		List<Language> list = new ArrayList<>(Arrays.asList(new Language(1, "Fraiz"), new Language(2, "Samuel"), new Language(3, "Varios")));
+		List<Language> list = new ArrayList<>(
+				Arrays.asList(new Language(1, "Terror"), new Language(2, "Acción"), new Language(3, "Otros")));
 
 		when(dao.findAll()).thenReturn(list);
 		var rslt = srv.getAll();
@@ -76,14 +77,31 @@ class LanguageServiceImplTest {
 		verify(dao, times(0)).save(null);
 	}
 
-//	@Test
-//	void testDelete() throws InvalidDataException {
-//	fail("Not yet implemented");
-//	}
+	@Test
+	void testDelete() throws InvalidDataException {
+		List<Language> list = new ArrayList<>(
+				Arrays.asList(new Language(1, "Terror"),
+						new Language(2, "Acción"),
+						new Language(3, "Otros")));
 
-//	@Test
-//	void testDeleteById() {
-//		fail("Not yet implemented");
-//	}
+		when(dao.findAll()).thenReturn(list);
+		dao.delete(new Language(2, "Terror"));
+		var rslt = srv.getAll();
+		var rslt1 = srv.getOne(2);
+
+		assertThat(rslt1.isPresent()).isFalse();
+
+	}
+
+	@Test
+	void testDeleteById() {
+		List<Language> list = new ArrayList<>(
+				Arrays.asList(new Language(1, "Terror"),
+						new Language(2, "Acción"),
+						new Language(3, "Otros")));
+
+		
+		
+	}
 
 }
