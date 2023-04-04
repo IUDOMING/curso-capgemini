@@ -48,7 +48,7 @@ class FilmTest {
 		assertEquals("ERRORES: language: must not be null.", item.getErrorsMessage());
 	}
 
-	@DisplayName("0 Under lenght")
+	@DisplayName("Lenght is under 0")
 	@ParameterizedTest(name = "Length: {0}, Error: {1}")
 	@CsvSource(value = { "0,'ERRORES: length: must be greater than 0.'" })
 	void testInvalidLength(Integer length, String errMsg) {
