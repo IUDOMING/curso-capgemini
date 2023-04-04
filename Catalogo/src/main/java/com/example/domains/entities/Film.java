@@ -154,6 +154,11 @@ public class Film extends EntityBase<Film> implements Serializable {
 	public Film() {
 	}
 
+	public Film(String title, Language language) {
+		this.title = title;
+		this.language= language;
+	}
+	
 	public Film(int filmId) {
 		this.filmId = filmId;
 	}
