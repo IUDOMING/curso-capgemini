@@ -14,6 +14,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.example.domains.contracts.repository.ActorRepository;
 import com.example.domains.entities.Actor;
+import com.example.domains.entities.Film;
+import com.example.domains.entities.Language;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
@@ -42,13 +44,14 @@ class ActorServiceImplTest {
 	}
 	
 	@Test
-	@DisplayName("Get non existent actor ")
+	@DisplayName("Get invalid ID")
 	void testNotFoundGet() {
 		var item = srv.getOne(300);
 		assertFalse(item.isPresent());
 	}
 	
 	@Test
+	@DisplayName("Add Actor")
 	void testAdd() throws DuplicateKeyException, InvalidDataException {
 		
 		var fullSize = srv.getAll().size();
@@ -57,6 +60,18 @@ class ActorServiceImplTest {
 		assertEquals(fullSize+1, srv.getAll().size());
 		srv.deleteById(result.getActorId());
 		
+	}
+	
+	@Test
+	@DisplayName("Add null actor")
+	void testNullAdd() throws DuplicateKeyException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.add(null));
+	}
+
+	@Test
+	@DisplayName("Add invalid actor")
+	void testInvalidAdd() throws DuplicateKeyException, InvalidDataException {
+		assertThrows(InvalidDataException.class, () -> srv.add(new Actor(0,"     ", "      ")));
 	}
 		
 	@Test
@@ -80,8 +95,8 @@ class ActorServiceImplTest {
 	@DisplayName("Modify actor")
 	void testModify() throws NotFoundException, InvalidDataException {
 		var actor = new Actor(0, "Hola", "MUNDO");
-		var adAct = srv.add(actor);
-		adAct.setLastName("CIELO");
+		actor = srv.add(actor);
+		actor.setLastName("CIELO");
 		var result = srv.modify(actor);
 		assertEquals("CIELO", result.getLastName());
 		assertEquals(actor.getActorId(), result.getActorId());
