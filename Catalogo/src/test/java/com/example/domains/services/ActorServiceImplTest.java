@@ -97,7 +97,8 @@ class ActorServiceImplTest {
 		var actor = new Actor(0, "Hola", "MUNDO");
 		srv.add(actor);
 		actor.setLastName("CIELO");
-		var result = srv.modify(actor);
+		srv.modify(actor);
+		var result = srv.getOne(actor.getActorId()).get();
 		assertEquals("CIELO", result.getLastName());
 		assertEquals(actor.getActorId(), result.getActorId());
 		srv.deleteById(result.getActorId());

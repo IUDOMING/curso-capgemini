@@ -76,7 +76,8 @@ class CategoryServiceImplTest {
 		var category = new Category(0, "Category 1");
 		srv.add(category);
 		category.setName("Category 2");
-		var result = srv.modify(category);
+		srv.modify(category);
+		var result = srv.getOne(category.getCategoryId()).get();
 		assertEquals("Category 2", result.getName());
 		assertEquals(category.getCategoryId(), result.getCategoryId());
 		srv.deleteById(result.getCategoryId());

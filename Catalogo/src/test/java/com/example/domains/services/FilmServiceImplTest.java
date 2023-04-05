@@ -84,7 +84,8 @@ class FilmServiceImplTest {
 				new Language(5), (byte) 10, new BigDecimal(20), 230, new BigDecimal(20), Rating.GENERAL_AUDIENCES);
 		srv.add(film);
 		film.setDescription("Film with modified description");
-		var result = srv.modify(film);
+		srv.modify(film);
+		var result = srv.getOne(film.getFilmId()).get();
 		assertEquals("Film with modified description", result.getDescription());
 		assertEquals(film.getFilmId(), result.getFilmId());
 		srv.deleteById(result.getFilmId());

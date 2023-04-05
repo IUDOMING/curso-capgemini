@@ -96,7 +96,8 @@ class LanguageServiceImplTest {
 		var language = new Language(0, "German");
 		srv.add(language);
 		language.setName("Language modified");
-		var result = srv.modify(language);
+		srv.modify(language);
+		var result = srv.getOne(language.getLanguageId()).get();
 		assertEquals("Language modified", result.getName());
 		assertEquals(language.getLanguageId(), result.getLanguageId());
 		srv.deleteById(result.getLanguageId());
