@@ -2,6 +2,7 @@ package com.example.domains.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -43,6 +44,13 @@ class FilmServiceImplTest {
 		var item = srv.getOne(1);
 		assertTrue(item.isPresent());
 	}
+	
+	@Test
+	@DisplayName("Get invalid ID")
+	void testNotFoundGet() {
+		var item = srv.getOne(2000);
+		assertFalse(item.isPresent());
+	}
 
 	@Test
 	@DisplayName("Add film")
@@ -74,11 +82,11 @@ class FilmServiceImplTest {
 
 		var film = new Film(0, "Film Title", "Description of the film", new Short("1990"), new Language(3),
 				new Language(5), (byte) 10, new BigDecimal(20), 230, new BigDecimal(20), Rating.GENERAL_AUDIENCES);
-		var addFilm = srv.add(film);
-		addFilm.setDescription("Film with modified description");
-		var result = srv.modify(addFilm);
+		film = srv.add(film);
+		film.setDescription("Film with modified description");
+		var result = srv.modify(film);
 		assertEquals("Film with modified description", result.getDescription());
-		assertEquals(addFilm.getFilmId(), result.getFilmId());// */
+		assertEquals(film.getFilmId(), result.getFilmId());
 		srv.deleteById(result.getFilmId());
 	}
 

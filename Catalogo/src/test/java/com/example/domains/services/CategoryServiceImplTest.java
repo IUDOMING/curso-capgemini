@@ -49,6 +49,7 @@ class CategoryServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("Add category")
 	void testAdd() throws DuplicateKeyException, InvalidDataException {
 		var fullSize = srv.getAll().size();
 		var category = new Category(0, "Category");
@@ -73,8 +74,8 @@ class CategoryServiceImplTest {
 	@DisplayName("Modify category")
 	void testModify() throws NotFoundException, InvalidDataException {
 		var category = new Category(0, "Category 1");
-		var addCat = srv.add(category);
-		addCat.setName("Category 2");
+		category = srv.add(category);
+		category.setName("Category 2");
 		var result = srv.modify(category);
 		assertEquals("Category 2", result.getName());
 		assertEquals(category.getCategoryId(), result.getCategoryId());
