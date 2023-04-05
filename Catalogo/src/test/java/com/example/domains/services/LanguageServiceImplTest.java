@@ -94,7 +94,7 @@ class LanguageServiceImplTest {
 	void testModify() throws NotFoundException, InvalidDataException {
 
 		var language = new Language(0, "German");
-		language = srv.add(language);
+		srv.add(language);
 		language.setName("Language modified");
 		var result = srv.modify(language);
 		assertEquals("Language modified", result.getName());

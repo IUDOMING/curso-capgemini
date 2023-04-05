@@ -95,14 +95,14 @@ class ActorServiceImplTest {
 	@DisplayName("Modify actor")
 	void testModify() throws NotFoundException, InvalidDataException {
 		var actor = new Actor(0, "Hola", "MUNDO");
-		actor = srv.add(actor);
+		srv.add(actor);
 		actor.setLastName("CIELO");
 		var result = srv.modify(actor);
 		assertEquals("CIELO", result.getLastName());
 		assertEquals(actor.getActorId(), result.getActorId());
 		srv.deleteById(result.getActorId());
 	}
-
+	
 	@Test
 	@DisplayName("Delete by id")
 	void testDeleteById() throws InvalidDataException, NotFoundException{

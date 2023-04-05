@@ -82,7 +82,7 @@ class FilmServiceImplTest {
 
 		var film = new Film(0, "Film Title", "Description of the film", new Short("1990"), new Language(3),
 				new Language(5), (byte) 10, new BigDecimal(20), 230, new BigDecimal(20), Rating.GENERAL_AUDIENCES);
-		film = srv.add(film);
+		srv.add(film);
 		film.setDescription("Film with modified description");
 		var result = srv.modify(film);
 		assertEquals("Film with modified description", result.getDescription());

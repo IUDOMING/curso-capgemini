@@ -74,7 +74,7 @@ class CategoryServiceImplTest {
 	@DisplayName("Modify category")
 	void testModify() throws NotFoundException, InvalidDataException {
 		var category = new Category(0, "Category 1");
-		category = srv.add(category);
+		srv.add(category);
 		category.setName("Category 2");
 		var result = srv.modify(category);
 		assertEquals("Category 2", result.getName());

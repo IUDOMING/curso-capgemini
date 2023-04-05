@@ -73,6 +73,14 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+	
+	public Actor(int actorId, String firstName, String lastName, Timestamp timestamp ) {
+		super();
+		this.actorId = actorId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.lastUpdate = timestamp;
+	}
 
 	// Basic Getters and Setters
 

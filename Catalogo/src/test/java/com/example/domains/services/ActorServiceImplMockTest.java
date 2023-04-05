@@ -104,6 +104,13 @@ class ActorServiceImplMockTest {
 		
 		
 	}
+	
+	@Test
+	void testNews() {
+		Actor actor = new Actor(1, "Fraiz", "FRANK");
+
+
+	}
 
 
 }
