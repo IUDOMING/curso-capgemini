@@ -78,7 +78,7 @@ class ActorServiceImplMockTest {
 		assertThrows(InvalidDataException.class, () -> srv.modify(null));
 		verify(dao, times(0)).save(null);
 	}
-	
+
 	@Test
 	void testDelete() throws InvalidDataException {
 		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
@@ -96,21 +96,12 @@ class ActorServiceImplMockTest {
 	void testDeleteById() {
 		List<Actor> list = new ArrayList<>(Arrays.asList(new Actor(1, "Fraiz", "FRANK"),
 				new Actor(2, "Samuel", "JACKSON"), new Actor(3, "Varios", "ALEATORIOS")));
-		
+
 		when(dao.findAll()).thenReturn(list);
 		dao.deleteById(3);
 		var rslt = srv.getOne(3);
 		assertThat(rslt.isPresent()).isFalse();
-		
-		
-	}
-	
-	@Test
-	void testNews() {
-		Actor actor = new Actor(1, "Fraiz", "FRANK");
-
 
 	}
-
 
 }
