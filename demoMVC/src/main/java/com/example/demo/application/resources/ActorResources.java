@@ -3,6 +3,7 @@ package com.example.demo.application.resources;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping(path = { "/api/actores/v1", "/api/actors" })
 public class ActorResources {
+	@Autowired
 	private ActorService srv;
 
 	@GetMapping
