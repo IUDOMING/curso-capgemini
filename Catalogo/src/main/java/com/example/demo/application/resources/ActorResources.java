@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.domains.entities.dtos.ElementoDTO;
+import com.example.domains.entities.dtos.FilmsActorsDTO;
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.ActorShort;
@@ -60,12 +60,12 @@ public class ActorResources {
 	
 	@GetMapping(path = "/{id}/pelis")
 	@Transactional
-	public List<ElementoDTO<Integer, String>> getPelis(@PathVariable int id) throws NotFoundException {
+	public List<FilmsActorsDTO<Integer, String>> getPelis(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);
 		if (item.isEmpty())
 			throw new NotFoundException();
 		return item.get().getFilmActors().stream()
-				.map(o -> new ElementoDTO<>(o.getFilm().getFilmId(),o.getFilm().getTitle())).toList();
+				.map(o -> new FilmsActorsDTO<>(o.getFilm().getFilmId(),o.getFilm().getTitle())).toList();
 	}
 
 	@PostMapping
