@@ -139,7 +139,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 	// Override of the method String, getting only the attributes we need.
 	@Override
 	public String toString() {
-		return "Category [categoryId=" + categoryId + ", name=" + name + ", lastUpdate=" + lastUpdate + "]";
+		return "Category [categoryId=" + categoryId + ", name=" + name + "]";
 	}
 
 }
