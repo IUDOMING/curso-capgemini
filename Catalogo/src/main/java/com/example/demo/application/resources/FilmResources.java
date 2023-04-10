@@ -24,6 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.domains.contracts.services.FilmServices;
 import com.example.domains.entities.Film;
 import com.example.domains.entities.dtos.ActorDTO;
+import com.example.domains.entities.dtos.ActorFilmsDTO;
 import com.example.domains.entities.dtos.FilmDetailsDTO;
 import com.example.domains.entities.dtos.FilmShortDTO;
 import com.example.exceptions.BadRequestException;
@@ -31,6 +32,7 @@ import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
@@ -59,15 +61,15 @@ public class FilmResources {
 		return FilmDetailsDTO.from(item.get());
 	}
 	
-//	@GetMapping(path = "/{id}/actores")
-//	@Transactional
-//	public List<ElementoDTO<Integer, String>> getActores(@PathVariable int id) throws NotFoundException {
-//		var item = srv.getOne(id);
-//		if (item.isEmpty())
-//			throw new NotFoundException();
-//		return item.get().getFilmActors().stream()
-//				.map(o -> new ElementoDTO<>(o.getFilm().getFilmId(),o.getFilm().getTitle())).toList();
-//	}
+	@GetMapping(path = "/{id}/actores")
+	@Transactional
+	public List<ActorFilmsDTO<Integer,String>> getActores(@PathVariable int id) throws NotFoundException {
+		var item = srv.getOne(id);
+		if (item.isEmpty())
+			throw new NotFoundException();
+		return item.get().getActors().stream()
+				.map(o -> new ActorFilmsDTO<>(o.getActorId(),o.getFirstName()+" " + o.getLastName())).toList();
+	}
 
 	@PostMapping
 	public ResponseEntity<Object> create(@Valid @RequestBody Film item)
