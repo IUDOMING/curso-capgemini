@@ -23,8 +23,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.FilmServices;
 import com.example.domains.entities.Film;
-import com.example.domains.entities.dtos.ActorDTO;
+import com.example.domains.entities.Language;
 import com.example.domains.entities.dtos.ActorFilmsDTO;
+import com.example.domains.entities.dtos.CategoriesFilmDTO;
 import com.example.domains.entities.dtos.FilmDetailsDTO;
 import com.example.domains.entities.dtos.FilmShortDTO;
 import com.example.exceptions.BadRequestException;
@@ -69,6 +70,24 @@ public class FilmResources {
 			throw new NotFoundException();
 		return item.get().getActors().stream()
 				.map(o -> new ActorFilmsDTO<>(o.getActorId(),o.getFirstName()+" " + o.getLastName())).toList();
+	}
+	@GetMapping(path = "/{id}/lenguaje")
+	@Transactional
+	public Language getLanguage(@PathVariable int id) throws NotFoundException {
+		var item = srv.getOne(id);
+		if (item.isEmpty())
+			throw new NotFoundException();
+		return item.get().getLanguage();
+	}
+	
+	@GetMapping(path = "/{id}/categorias")
+	@Transactional
+	public List<CategoriesFilmDTO<Integer,String>> getCategories(@PathVariable int id) throws NotFoundException {
+		var item = srv.getOne(id);
+		if (item.isEmpty())
+			throw new NotFoundException();
+		return item.get().getCategories().stream()
+				.map(o -> new CategoriesFilmDTO<>(o.getCategoryId(),o.getName())).toList();
 	}
 
 	@PostMapping
