@@ -69,6 +69,7 @@ public class CategoryResources {
 
 	}
 
+	
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@PathVariable int id, @Valid @RequestBody Category item)

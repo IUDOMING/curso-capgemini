@@ -25,7 +25,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.domains.contracts.services.CategoryService;
-import com.example.domains.entities.Actor;
 import com.example.domains.entities.Category;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -51,34 +50,25 @@ class CategoryResourcesTest {
 		fail("Not yet implemented");
 	}
 
-
 	@Test
 	void testGetAllString() throws Exception {
-		List<Category> lista = new ArrayList<>(Arrays.asList(
-				new Category(1, "Terror"),
-				new Category(2, "Acción"), 
-				new Category(3, "Infantil")));
-		
+		List<Category> lista = new ArrayList<>(
+				Arrays.asList(new Category(1, "Terror"), new Category(2, "Acción"), new Category(3, "Infantil")));
+
 		when(srv.getAll()).thenReturn(lista);
-		mockMvc.perform(get("/api/categorias/v1").accept(MediaType.APPLICATION_JSON))
-		.andExpectAll(
-				status().isOk(),
-				content().contentType("application/json"),
-				jsonPath("$.size()").value(3));
+		mockMvc.perform(get("/api/categorias/v1").accept(MediaType.APPLICATION_JSON)).andExpectAll(status().isOk(),
+				content().contentType("application/json"), jsonPath("$.size()").value(3));
 	}
-	
+
 	@Test
 	void testGetOne() throws Exception {
 		int id = 1;
 		var ele = new Category(1, "Terror");
 		when(srv.getOne(id)).thenReturn(Optional.of(ele));
-		mockMvc.perform(get("/api/categorias/v1/{id}", id))
-			.andExpect(status().isOk())
-	        .andExpect(jsonPath("$.id").value(id))
-	        .andExpect(jsonPath("$.categoria").value(ele.getName()))
-	        .andDo(print());
+		mockMvc.perform(get("/api/categorias/v1/{id}", id)).andExpect(status().isOk())
+				.andExpect(jsonPath("$.id").value(id)).andExpect(jsonPath("$.categoria").value(ele.getName()))
+				.andDo(print());
 	}
-
 
 	@Test
 	void testGetOne404() throws Exception {
@@ -100,8 +90,9 @@ class CategoryResourcesTest {
 	}
 
 	@Test
-	void testUpdate() {
+	void testUpdate() throws Exception {
 		fail("Not yet implemented");
+		
 	}
 
 	@Test

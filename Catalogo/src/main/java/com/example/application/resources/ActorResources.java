@@ -65,7 +65,8 @@ public class ActorResources {
 		if (item.isEmpty())
 			throw new NotFoundException();
 		return item.get().getFilmActors().stream()
-				.map(o -> new FilmsActorsDTO<>(o.getFilm().getFilmId(),o.getFilm().getTitle())).toList();
+				.map(o -> new FilmsActorsDTO<>(o.getFilm().getFilmId(),
+						o.getFilm().getTitle())).toList();
 	}
 
 	@PostMapping
