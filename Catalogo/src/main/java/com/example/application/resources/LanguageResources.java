@@ -39,7 +39,7 @@ public class LanguageResources {
 			return (List<Language>) srv.getAll();
 		return srv.getAll();
 	}
-
+	
 	@GetMapping(path = "/{id}")
 	public Language getOne(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);
