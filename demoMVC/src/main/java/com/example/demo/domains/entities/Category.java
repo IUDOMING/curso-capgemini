@@ -1,18 +1,11 @@
 package com.example.demo.domains.entities;
 
 import java.io.Serializable;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+
 import java.sql.Timestamp;
 import java.util.List;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
 
 
 /**
@@ -28,8 +21,6 @@ public class Category implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="category_id", unique=true, nullable=false)
-	
-	//Como se trataba de un Byte en la Base de Datos, indicamos la restricción
 	@Max(255)
 	private int categoryId;
 

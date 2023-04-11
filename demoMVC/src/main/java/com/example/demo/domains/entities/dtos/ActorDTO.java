@@ -6,25 +6,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 
 //@Data @AllArgsConstructor @NoArgsConstructor
-
 @Value
 public class ActorDTO {
-
 	@JsonProperty("id")
 	private int actorId;
 	@JsonProperty("nombre")
 	private String firstName;
-	@JsonProperty("apellido")
+	@JsonProperty("apellidos")
 	private String lastName;
 	
-	
-	// De ActorDTO se pasa a Actor
 	public static ActorDTO from(Actor target) {
 		return new ActorDTO(target.getActorId(), target.getFirstName(), target.getLastName());
 	}
 
-	//De Actor se pasa a ActorDTO
 	public static Actor from(ActorDTO target) {
 		return new Actor(target.getActorId(), target.getFirstName(), target.getLastName());
 	}
+
 }
