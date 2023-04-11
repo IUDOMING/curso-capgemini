@@ -21,7 +21,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.CategoryService;
 import com.example.domains.entities.Category;
-import com.example.domains.entities.dtos.ActorDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
