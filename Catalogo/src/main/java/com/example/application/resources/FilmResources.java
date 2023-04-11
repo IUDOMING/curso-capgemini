@@ -40,6 +40,7 @@ import jakarta.validation.Valid;
 @RequestMapping(path = { "/api/peliculas/v1", "/api/peliculas" })
 public class FilmResources {
 	@Autowired
+	
 	private FilmServices srv;
 
 	@GetMapping

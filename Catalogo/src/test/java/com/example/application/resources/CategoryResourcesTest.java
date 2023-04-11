@@ -48,7 +48,6 @@ class CategoryResourcesTest {
 	@Autowired
 	ObjectMapper objectMapper;
 
-
 	@Test
 	@DisplayName("Get all categories")
 	void testGetAllString() throws Exception {
