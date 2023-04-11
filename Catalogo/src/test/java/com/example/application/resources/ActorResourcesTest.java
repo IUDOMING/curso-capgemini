@@ -130,11 +130,8 @@ class ActorResourcesTest {
 						new FilmActor(filmList.get(1), actor)
 						));
 				
-		
 		actor.setFilmActors(filmActors);
-		
 		when(srv.getOne(id)).thenReturn(Optional.of(actor));
-		
 		mockMvc.perform(get("/api/actores/v1/{id}/pelis", id))
 			.andExpectAll(
 					status().isOk(),
@@ -164,9 +161,7 @@ class ActorResourcesTest {
 	void testUpdate() throws Exception {
 		int id = 1;
 		var ele = new Actor(id,"Samuel", "JACKSON");
-		
 		when(srv.modify(ele)).thenReturn(ele);
-		
 		mockMvc.perform(put("/api/actores/v1/{id}", id)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(objectMapper.writeValueAsString(ActorDTO.from(ele))))
