@@ -72,14 +72,6 @@ public class FilmResources {
 		return item.get().getActors().stream()
 				.map(o -> new ActorFilmsDTO<>(o.getActorId(),o.getFirstName()+" " + o.getLastName())).toList();
 	}
-	@GetMapping(path = "/{id}/lenguaje")
-	@Transactional
-	public Language getLanguage(@PathVariable int id) throws NotFoundException {
-		var item = srv.getOne(id);
-		if (item.isEmpty())
-			throw new NotFoundException();
-		return item.get().getLanguage();
-	}
 	
 	@GetMapping(path = "/{id}/categorias")
 	@Transactional
