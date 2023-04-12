@@ -28,8 +28,10 @@ public class CatalogoServiceImpl implements CatalogoService {
 	public NovedadesDTO news(Timestamp date) {
 		if (date == null)
 			date = Timestamp.from(Instant.now().minusSeconds(36000));
-		return new NovedadesDTO(filmSrv.news(date).stream().map(item -> FilmEditDTO.from(item)).toList(),
-				artorSrv.news(date).stream().map(item -> ActorDTO.from(item)).toList(), categorySrv.news(date),
+		return new NovedadesDTO(
+				filmSrv.news(date).stream().map(item -> FilmEditDTO.from(item)).toList(),
+				artorSrv.news(date).stream().map(item -> ActorDTO.from(item)).toList(),
+				categorySrv.news(date),
 				languageSrv.news(date));
 	}
 
