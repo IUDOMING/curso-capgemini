@@ -36,6 +36,7 @@ import com.example.domains.contracts.services.FilmServices;
 import com.example.domains.entities.Actor;
 import com.example.domains.entities.Category;
 import com.example.domains.entities.Film;
+import com.example.domains.entities.FilmActor;
 import com.example.domains.entities.Film.Rating;
 import com.example.domains.entities.Language;
 import com.example.domains.entities.dtos.ActorShort;
@@ -105,6 +106,66 @@ class FilmResourcesTest {
 	        .andExpect(jsonPath("$.filmId").value(id))
 	        .andExpect(jsonPath("$.title").value(ele.getTitle()))
 	        .andDo(print());
+	}
+	
+	@Test
+	@DisplayName("Get film actors")
+	void testGetFilmActors() throws Exception{
+		var id = 1; 
+		List<Actor> actorList = new ArrayList<>(
+		        Arrays.asList(new Actor(1, "Samuel", "JACKSON"),
+		        		new Actor(2, "Bernard", "PENINGTON")));
+		
+		        		
+		var film = new Film(1, "Titulo", "Description of the film we don't know about",
+        		new Short("1990"), new Language(3),
+				new Language(5), (byte) 10, new BigDecimal(20),
+				230, new BigDecimal(20), Rating.GENERAL_AUDIENCES);
+				
+		film.setActors(actorList);
+		when(srv.getOne(id)).thenReturn(Optional.of(film));
+		mockMvc.perform(get("/api/peliculas/v1/{id}/actores", id))
+			.andExpectAll(
+					status().isOk(),
+					jsonPath("$[0].id").value(1),
+					jsonPath("$[0].name").value("Samuel JACKSON"),
+					jsonPath("$[1].id").value(2),
+					jsonPath("$[1].name").value("Bernard PENINGTON")
+					
+
+			).andDo(print());
+			
+	}
+	
+	@Test
+	@DisplayName("Get film categories")
+	void testGetFilmCategories() throws Exception{
+		var id = 1; 
+		List<Category> categoryList = new ArrayList<>(
+		        Arrays.asList(new Category(1, "Terror"),
+		        		new Category(2,"Infantil"),
+		        		new Category(3, "Acción")));
+		
+		        		
+		var film = new Film(1, "Titulo", "Description of the film we don't know about",
+        		new Short("1990"), new Language(3),
+				new Language(5), (byte) 10, new BigDecimal(20),
+				230, new BigDecimal(20), Rating.GENERAL_AUDIENCES);
+				
+		film.setCategories(categoryList);
+		when(srv.getOne(id)).thenReturn(Optional.of(film));
+		mockMvc.perform(get("/api/peliculas/v1/{id}/categorias", id))
+			.andExpectAll(
+					status().isOk(),
+					jsonPath("$[0].id").value(1),
+					jsonPath("$[0].category").value("Terror"),
+					jsonPath("$[1].id").value(2),
+					jsonPath("$[1].category").value("Infantil"),
+					jsonPath("$[2].id").value(3),
+					jsonPath("$[2].category").value("Acción")
+					
+			).andDo(print());
+			
 	}
 	
 	@Test
