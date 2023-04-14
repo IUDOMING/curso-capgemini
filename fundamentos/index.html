@@ -6,48 +6,36 @@
     <title>Ejemplos del curso</title>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
 </head>
-<header>Sup</header>
-<body align="center">
+<body>
+    <h1 class="bg-danger"><b><i>Adiós</b> mundo</i></h1>
     
-    <h1 class="bg-danger"><b><i>Adiós</i> mundo</b></h1>
-   
     <script src="demo.js"></script>
     <script src="otro.js"></script>
     <script>
-       let x='En la pagina'
-        console.log('Hola mundo')
-        usaKK();
-        
-        //De esta manera evitamos crear variables generales
-        //Las variables son locales
-        //Al ser una función anónima, al acabar la función, desaparecen las variables
-        (function() {
-            for (let i=0; i <10; i++)
-        {
-            //...
-        }
-        })
+        // let x = "En la pagina"
+        // console.log('Hola mundo')
+        // usaKK();
+        // // usaKK = 4;
+        // console.log(usaKK)
+        // (function() {
+        //     for(let i=0; i < 10; i++) {
+        //         // ...
+        //     }
+        // })()
+   </script>
+   <script type="module">
+        import * as m1 from './modulos/modulo1.js'
+        import {name, calc } from './modulos/modulo2.js'
+        import {name as name2} from './modulos/modulo1.js'
+        import {display} from './modulos'
 
-     
-    </script>
-    
-<footer>
-<table>
-<tr>
-    <td>Sup</td>
-    <td>Sup</td>
-    <td>Sup</td>
-    <td>Sup</td>
-</tr>
-<tr>
-    <td>Bup</td>
-    <td>Bup</td>
-    <td>Bup</td>
-    <td>Bup</td>
-</tr>
-</table>
+        console.log(m1.name, m1.calc(2, 2))
+        console.log(name, calc(2,2))
+        display();
+        m1.setName('Soy el principal')
+        console.log(name, name2)
 
-</footer>
+
+   </script>
 </body>
-
 </html>
