@@ -19,6 +19,13 @@
         <output>0</output>
 
     </div>
+    <div>
+        <button type="button" id="btnList">List</button>
+        <ul id="list">
+
+
+        </ul>
+    </div>
 </main>
 
     <!--Montamos la función de la calculadora-->
@@ -27,14 +34,23 @@
                 let result= document.querySelector('output')
                 let btn= document.querySelector('input[type=button]')
                 let suma = ev => {
-                    result.textContent=+document.querySelector('#op1').value + +document.querySelector('#op2').value
-                    btn.removeEventListener('click', suma)}
+                   // result.textContent=+document.querySelector('#op1').value + +document.querySelector('#op2').value
+                    result.innerHTML=`<b>${+document.querySelector('#op1').value + +document.querySelector('#op2').value}</b>`
+                   // btn.removeEventListener('click', suma)
+                   // document.querySelector('span').hidden = !document.querySelector('span').hidden
+                }
                 btn.addEventListener('click', suma)
                
                 btn.addEventListener('click', ev => {
                     console.log('Boton pulsado')
                 })
                 document.querySelector('span').addEventListener('click',suma)
+                let cad = ''
+                for(let i = 0 ; i<10; i++){
+                    cad += `<li>Elemento ${i+1}</li>`
+                }
+                document.querySelector('#list').innerHTML = cad
+
                
         })();
     </script>
