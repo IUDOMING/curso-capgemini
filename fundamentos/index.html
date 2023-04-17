@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejemplos del curso</title>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+    <script>
+        document.onload = ev => {
+            console.log('Documento cargado')
+        }
+    </script>
 </head>
 <body>
     <main class="container-fluid" >
@@ -32,15 +37,22 @@
     <script>
         (function(){
                 let result= document.querySelector('output')
+                if(localStorage && localStorage.result){
+                    result.textContent= localStorage.result
+                }
                 let btn= document.querySelector('input[type=button]')
                 let suma = ev => {
                    // result.textContent=+document.querySelector('#op1').value + +document.querySelector('#op2').value
                     result.innerHTML=`<b>${+document.querySelector('#op1').value + +document.querySelector('#op2').value}</b>`
                    // btn.removeEventListener('click', suma)
                    // document.querySelector('span').hidden = !document.querySelector('span').hidden
+                   if(localStorage) {
+                    localStorage.result = +document.querySelector('#op1').value + +document.querySelector('#op2').value
+                   }
+                   
                 }
+                localStorage.kk = JSON.stringify({id:1, nombre: 'kk'})
                 btn.addEventListener('click', suma)
-               
                 btn.addEventListener('click', ev => {
                     console.log('Boton pulsado')
                 })
