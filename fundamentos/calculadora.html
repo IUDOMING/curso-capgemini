@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Calculadora</title>
+</head>
+<body>
+    <table class="calculator">
+        <tr>
+            <!--Screeen-->
+            <td colspan="3"> <input class="display-box" type="text" id="result" disabled /> </td>
+            <!-- clearScreen() function clears all the values -->
+            <td> <input type="button" value="C" id="clear" /> </td>
+        </tr>
+        <tr>
+            <td><input type="button" id="v7" value="7"></td>
+            <td><input type="button" id="v8" value="8"></td>
+            <td><input type="button" id="v9" value="9"></td>
+            <td><input type="button" id="div" value="/"></td>
+        </tr>
+        <tr>
+            <td><input type="button" id="v4" value="4"></td>
+            <td><input type="button" id="v5" value="5"></td>
+            <td><input type="button" id="v6" value="6"></td>
+            <td><input type="button" id="mult" value="*"></td>
+        </tr>
+
+        <tr>
+            <td><input type="button" id="v1" value="1"></td>
+            <td><input type="button" id="v2" value="2"></td>
+            <td><input type="button" id="v3" value="3"></td>
+            <td><input type="button" id="sum" value="+"></td>
+        </tr>
+
+        <tr>
+            <td><input type="button" id="dec" value="."></td>
+            <td><input type="button" id="v0" value="0"></td>
+            <td><input type="button" id="rslt" value="="></td>
+            <td><input type="button" id="minus" value="-"></td>
+        </tr>
+    </table>
+    <script type="text/javascript" src="scripts/script.js"></script>
+</body>
+</html>
