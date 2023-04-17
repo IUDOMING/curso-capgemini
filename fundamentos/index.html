@@ -7,10 +7,39 @@
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
 </head>
 <body>
-    <h1 class="bg-danger"><b><i>Adiós</b> mundo</i></h1>
-    
-    <script src="demo.js"></script>
-    <script src="otro.js"></script>
+    <main class="container-fluid" >
+        <h1 class="bg-danger"><b><i>Adiós</b> mundo</i></h1>
+
+    <!--Cramos una calculadora-->
+    <div>
+        <input type="number" id="op1" value="0">
+       <span>+</span>
+        <input type="number" id="op2" value="0">
+        <input type="button" value="=">
+        <output>0</output>
+
+    </div>
+</main>
+
+    <!--Montamos la función de la calculadora-->
+    <script>
+        (function(){
+                let result= document.querySelector('output')
+                let btn= document.querySelector('input[type=button]')
+                let suma = ev => {
+                    result.textContent=+document.querySelector('#op1').value + +document.querySelector('#op2').value
+                    btn.removeEventListener('click', suma)}
+                btn.addEventListener('click', suma)
+               
+                btn.addEventListener('click', ev => {
+                    console.log('Boton pulsado')
+                })
+                document.querySelector('span').addEventListener('click',suma)
+               
+        })();
+    </script>
+    <!-- <script src="demo.js"></script>
+    <script src="otro.js"></script> -->
     <script>
         // let x = "En la pagina"
         // console.log('Hola mundo')
@@ -23,7 +52,7 @@
         //     }
         // })()
    </script>
-   <script type="module">
+   <!-- <script type="module">
         import * as m1 from './modulos/modulo1.js'
         import {name, calc } from './modulos/modulo2.js'
         import {name as name2} from './modulos/modulo1.js'
@@ -36,6 +65,6 @@
         console.log(name, name2)
 
 
-   </script>
+   </script> -->
 </body>
 </html>
