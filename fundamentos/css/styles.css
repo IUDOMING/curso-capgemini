@@ -1,122 +1,43 @@
-*,
-::before,
-::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-ul {
-  list-style: none;
-}
-/* font loading */
-@font-face {
-  font-family: "Windows 95";
-    src: url('https://1674814792-20d01e3358a6b87a.wp-transfer.sgvps.net/wp-content/uploads/2022/08/w95.woff2')
-    format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-.red {
-  color: #ff0000;
-}
-.blue {
-  color: #0000ff;
-}
-.red-dark {
-  color: #800000;
-}
-* {
-  font-family: "Windows 95", sans-serif;
-}
-body {
-  height: 100vh;
-  background: #eaeaea;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
 .calculator {
-  padding: 24px;
-  background: #c0c0c0;
-  border-width: 3px;
-  border-style: solid;
-  border-right-color: #606f6f;
-  border-bottom-color: #606f6f;
-  border-top-color: #f1f1f1;
-  border-left-color: #f1f1f1;
+padding: 10px;
+border-radius: 1em;
+height: 380px;
+width: 400px;
+margin: auto;
+background-color: #191b28;
+box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
-.calculator .screen .result {
-  width: 100%;
-  max-width: 100%;
-  height: 68px;
-  text-align: right;
-  padding: 16px;
-  font-size: 32px;
-  font-weight: bold;
-  color: #000;
-  background-color: #fff;
-  border-width: 3px;
-  border-style: solid;
-  border-right-color: #f1f1f1;
-  border-bottom-color: #f1f1f1;
-  border-top-color: #606f6f;
-  border-left-color: #606f6f;
+
+.display-box {
+font-family: 'Orbitron', sans-serif;
+background-color: #dcdbe1;
+border: solid black 0.5px;
+color: black;
+border-radius: 5px;
+width: 100%;
+height: 65%;
 }
-.calculator .buttons {
-/*CSS grid to layout all buttons */
-  display: grid;
-  gap: 8px;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+
+#btn {
+background-color: #fb0066;
 }
-.calculator .buttons button {
-  font-size: 32px;
-  font-weight: bold;
+
+input[type=button] {
+font-family: 'Orbitron', sans-serif;
+background-color: #64278f;
+color: white;
+border: solid black 0.5px;
+width: 100%;
+border-radius: 5px;
+height: 70%;
+outline: none;
 }
-.calculator .buttons button:hover {
-  cursor: pointer;
-}
-/* button styles are copied from external css library */
-.btn {
-  position: relative;
-  transition: all 0.2s ease;
-  letter-spacing: 0.025em;
-  padding: 0.7rem 2.1rem;
-}
-.btn:before,
-.btn:after {
-  content: "";
-  position: absolute;
-  box-sizing: border-box;
-  display: block;
-  background: transparent;
-  z-index: 9;
-  top: 0;
-  left: 0;
-}
-.btn:before {
-  width: 100%;
-  height: 100%;
-  border-top: 2px solid #f1f1f1;
-  border-left: 2px solid #f1f1f1;
-  border-right: 2px solid #606f6f;
-  border-bottom: 2px solid #606f6f;
-}
-.btn:not(:disabled):not(.disabled):active:before,
-.btn:not(:disabled):not(.disabled):active:focus:before {
-  border-color: transparent;
-}
-.btn-primary {
-  background-color: #c0c0c0;
-  border-color: #a0a0a0;
-}
-.btn-primary:hover {
-  background-color: #c0c0c0;
-  border-color: #a0a0a0;
-}
-.btn-primary:focus,
-.btn-primary.focus {
-  box-shadow: none;
+
+input:active[type=button] {
+background: #e5e5e5;
+-webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+-moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+box-shadow: inset 0px 0px 5px #c1c1c1;
 }
