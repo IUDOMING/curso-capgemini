@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Calculator</title>
+</head>
+<body>
+    <table class="calculator">
+        <tr>
+            <td colspan="3"> <div class="display-box"><output class="display" type="text" id="txtDisplay" disabled></div></output> </td>
+            <td> <input id="clear" class="btn-op" type="button" value="C"> </td>
+        </tr>
+        <tr>
+            <td><input class="btn-num" type="button" id="v7" value="7"></td>
+            <td><input class="btn-num" type="button" id="v8" value="8"></td>
+            <td><input class="btn-num" type="button" id="v9" value="9"></td>
+            <td><input class="btn-calc" type="button" id="div" value="/"></td>
+        </tr>
+        <tr>
+            <td><input class="btn-num" type="button" id="v4" value="4"></td>
+            <td><input class="btn-num" type="button" id="v5" value="5"></td>
+            <td><input class="btn-num" type="button" id="v6" value="6"></td>
+            <td><input class="btn-calc" type="button" id="mult" value="*"></td>
+        </tr>
+
+        <tr>
+            <td><input class="btn-num" type="button" id="v1" value="1"></td>
+            <td><input class="btn-num" type="button" id="v2" value="2"></td>
+            <td><input class="btn-num" type="button" id="v3" value="3"></td>
+            <td><input class="btn-calc" type="button" id="sum" value="+"></td>
+        </tr>
+
+        <tr>
+            <td><input class="btn-digit" type="button" id="dec" value=","></td>
+            <td><input class="btn-num" type="button" id="v0" value="0"></td>
+            <td><input class="btn-calc" type="button" id="rslt" value="="></td>
+            <td><input class="btn-calc" type="button" id="minus" value="-"></td>
+        </tr>
+    </table>
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript">
+		(function () {
+			let txtDisplay = document.querySelector('#txtDisplay');
+
+			let calc = new Calculator(
+				value => txtDisplay.textContent = value.replace(/\./g, ','),
+
+			);
+			calc.clear();
+			document.querySelectorAll('.btn-num').forEach(tag => {
+				tag.addEventListener('click', ev => {
+					calc.digit(ev.target.value);
+				})
+			})
+			document.querySelectorAll('.btn-calc').forEach(tag => {
+				tag.addEventListener('click', ev => {
+					calc.solve(ev.target.value);
+				})
+			})
+			document.querySelector('[value=","]').addEventListener('click', calc.decimal)
+			document.querySelector('#clear').addEventListener('click', calc.clear);
+
+			document.body.focus()
+		})();
+	</script>
+</body>
+</html>
