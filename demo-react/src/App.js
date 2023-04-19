@@ -3,6 +3,7 @@ import "./App.css";
 
 import React, { Component } from "react";
 import { Card, Contador } from "./Componentes";
+import Muro from "./ejercicios/muro";
 
 export default class App extends Component {
   constructor(props) {
@@ -18,6 +19,8 @@ export default class App extends Component {
       //Text that will show the menu
       //Url
       //Component: Adds the components that we created
+
+      { texto: "Muro", url: "/muro", componente: <Muro /> },
       { texto: "inicio", url: "/", componente: <Home /> },
       { texto: "demo", url: "/demo", componente: <DemosJSX /> },
       { texto: "contador", url: "/contador", componente: <Contador init={69} />},
