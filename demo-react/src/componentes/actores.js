@@ -14,8 +14,7 @@ export class ActoresMnt extends Component {
       paginas: 0,
     };
     this.idOriginal = null;
-    this.url =
-      (process.env.REACT_APP_API_URL || "http://localhost:8003/") +"/api/actores/v1";
+    this.url =(process.env.REACT_APP_API_URL || "http://localhost:8003/") +"/api/actores/v1";
   }
 
   setError(msg) {
@@ -48,7 +47,7 @@ export class ActoresMnt extends Component {
   add() {
     this.setState({
       modo: "add",
-      elemento: { id: 0, nombre: "", apellidos: "" },
+      elemento: { id: 0, name: "", surname: "" },
     });
   }
   edit(key) {
@@ -269,9 +268,9 @@ function ActoresView({ elemento, onCancel }) {
       <p>
         <b>Código:</b> {elemento.id}
         <br />
-        <b>Nombre:</b> {elemento.nombre}
+        <b>Nombre:</b> {elemento.name}
         <br />
-        <b>Apellidos:</b> {elemento.apellidos}
+        <b>Apellidos:</b> {elemento.surname}
       </p>
       <p>
         <button
@@ -311,7 +310,7 @@ class ActoresForm extends Component {
     if (cntr.name) {
       // eslint-disable-next-line default-case
       switch (cntr.name) {
-        case "apellidos":
+        case "surname":
           cntr.setCustomValidity(
             cntr.value !== cntr.value.toUpperCase()
               ? "Debe estar en mayúsculas"
@@ -360,33 +359,33 @@ class ActoresForm extends Component {
           <ValidationMessage msg={this.state.msgErr.id} />
         </div>
         <div className="form-group">
-          <label htmlFor="nombre">Nombre</label>
+          <label htmlFor="name">Nombre</label>
           <input
             type="text"
             className="form-control"
-            id="nombre"
-            name="nombre"
-            value={this.state.elemento.nombre}
+            id="name"
+            name="name"
+            value={this.state.elemento.name}
             onChange={this.handleChange}
             required
             minLength="2"
             maxLength="45"
           />
-          <ValidationMessage msg={this.state.msgErr.nombre} />
+          <ValidationMessage msg={this.state.msgErr.name} />
         </div>
         <div className="form-group">
-          <label htmlFor="apellidos">Apellidos</label>
+          <label htmlFor="surname">Apellidos</label>
           <input
             type="text"
             className="form-control"
-            id="apellidos"
-            name="apellidos"
-            value={this.state.elemento.apellidos}
+            id="surname"
+            name="surname"
+            value={this.state.elemento.surname}
             onChange={this.handleChange}
             minLength="2"
             maxLength="10"
           />
-          <ValidationMessage msg={this.state.msgErr.apellidos} />
+          <ValidationMessage msg={this.state.msgErr.surname} />
         </div>
         <div className="form-group">
           <button
