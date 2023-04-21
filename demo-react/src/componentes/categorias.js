@@ -276,7 +276,7 @@ function CategoriesView({ elemento, onCancel }) {
       <p>
         <b>Código:</b> {elemento.id}
         <br />
-        <b>Nombre:</b> {elemento.categoria}
+        <b>Categoria:</b> {elemento.categoria}
         <br />
       </p>
       <p>
@@ -313,27 +313,13 @@ class CategoriesForm extends Component {
     });
     this.validar();
   }
-  validarCntr(cntr) {
-    if (cntr.name) {
-      // eslint-disable-next-line default-case
-      switch (cntr.name) {
-        case "surname":
-          cntr.setCustomValidity(
-            cntr.value !== cntr.value.toUpperCase()
-              ? "Debe estar en mayúsculas"
-              : ""
-          );
-          break;
-      }
-    }
-  }
+
   validar() {
     if (this.form) {
       const errors = {};
       let invalid = false;
       for (var cntr of this.form.elements) {
         if (cntr.name) {
-          this.validarCntr(cntr);
           errors[cntr.name] = cntr.validationMessage;
           invalid = invalid || !cntr.validity.valid;
         }

@@ -27,7 +27,7 @@ import { ErrorMessage, Esperando} from '../comunes'
    }
    load(num) {
      this.setState({loading: true})
-     fetch('http://localhost:8003/api/categorias/v1')
+     fetch('http://localhost:8003/api/peliculas/v1')
          .then(resp => {
              if(resp.ok) {
                  resp.json().then(

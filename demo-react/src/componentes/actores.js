@@ -383,7 +383,7 @@ class ActoresForm extends Component {
             value={this.state.elemento.surname}
             onChange={this.handleChange}
             minLength="2"
-            maxLength="10"
+            maxLength="45"
           />
           <ValidationMessage msg={this.state.msgErr.surname} />
         </div>

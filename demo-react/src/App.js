@@ -11,6 +11,7 @@ import { PadreFormulario } from './formulario';
 import { ActorsMnt } from './componentes/actores';
 import { CategoriesMnt } from './componentes/categorias';
 import Pruebas from './componentes/pruebas';
+import { LanguagesMnt } from './componentes/lenguajes';
 
 export default class App extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ export default class App extends Component {
     }
     this.menu = [
       { texto: 'pruebas', url: '/pruebas', componente: <Pruebas /> },
+      { texto: 'lenguages', url: '/lenguages', componente: <LanguagesMnt /> },
       { texto: 'categorias', url: '/categorias', componente: <CategoriesMnt /> },
       { texto: 'actores', url: '/actores', componente: <ActorsMnt /> },
       { texto: 'fromulario', url: '/fromulario', componente: <PadreFormulario /> },
