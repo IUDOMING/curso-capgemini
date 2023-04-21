@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { ValidationMessage, ErrorMessage, Esperando, PaginacionCmd as Paginacion,} from "../biblioteca/comunes";
+import { ValidationMessage, ErrorMessage, Esperando,} from "../biblioteca/comunes";
 import { titleCase } from "../biblioteca/formateadores";
-export class ActorsMnt extends Component {
+export class CategoriesMnt extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,44 +10,57 @@ export class ActorsMnt extends Component {
       elemento: null,
       error: null,
       loading: true,
-      pagina: 0,
-      paginas: 0,
     };
     this.idOriginal = null;
-    this.url =(process.env.REACT_APP_API_URL || "http://localhost:8003/") +"/api/actores/v1";
+    this.url =(process.env.REACT_APP_API_URL || "http://localhost:8003/") +"/api/categorias/v1";
   }
 
   setError(msg) {
     this.setState({ error: msg, loading: false });
   }
 
-  list(num) {
-    let pagina = this.state.pagina;
-    if (num || num === 0) pagina = num;
-    this.setState({ loading: true });
-    fetch(`${this.url}?sort=firstName&page=${pagina}&size=10`)
-      .then((response) => {
-        response.json().then(
-          response.ok
-            ? (data) => {
-                this.setState({
-                  modo: "list",
-                  listado: data.content,
-                  loading: false,
-                  pagina: data.number,
-                  paginas: data.totalPages,
-                });
-              }
-            : (error) => this.setError(`${error.status}: ${error.error}`)
-        );
-      })
-      .catch((error) => this.setError(error));
-  }
+//   list() {
+//     this.setState({ loading: true });
+//     fetch(`${this.url}`)
+//       .then((response) => {
+//         response.json().then(
+//           response.ok
+//             ? (data) => {
+//                 this.setState({
+//                   modo: "list",
+//                   listado: data.content,
+//                   loading: false,
+//                 });
+//               }
+//             : (error) => this.setError(`${error.status}: ${error.error}`)
+//         );
+//       })
+//       .catch((error) => this.setError(error));
+//   }
+
+   list(num) {
+     this.setState({loading: true})
+     fetch(`${this.url}`)
+     .then((response) => {
+                response.json().then(
+           response.ok
+             ? (data) => {
+                 this.setState({
+                   modo: "list",
+                   listado: data,
+                   loading: false,
+                 });
+               }
+             : (error) => this.setError(`${error.status}: ${error.error}`)
+         );
+       })
+       .catch((error) => this.setError(error));
+   }
 
   add() {
     this.setState({
       modo: "add",
-      elemento: { id: 0, name: "", surname: "" },
+      elemento: { id: 0, categoria: ""},
     });
   }
   edit(key) {
@@ -88,7 +101,7 @@ export class ActorsMnt extends Component {
       .catch((error) => this.setError(error));
   }
   delete(key) {
-    if (!window.confirm("¿Seguro?")) return;
+    if (!window.confirm("Are you sure?")) return;
     this.setState({ loading: true });
     fetch(`${this.url}/${key}`, { method: "DELETE" })
       .then((response) => {
@@ -103,7 +116,7 @@ export class ActorsMnt extends Component {
       .catch((error) => this.setError(error));
   }
   componentDidMount() {
-    this.list(0);
+    this.list();
   }
 
   cancel() {
@@ -167,7 +180,7 @@ export class ActorsMnt extends Component {
       case "add":
       case "edit":
         result.push(
-          <ActoresForm
+          <CategoriesForm
             key="main"
             isAdd={this.state.modo === "add"}
             elemento={this.state.elemento}
@@ -178,7 +191,7 @@ export class ActorsMnt extends Component {
         break;
       case "view":
         result.push(
-          <ActoresView
+          <CategoriesView
             key="main"
             elemento={this.state.elemento}
             onCancel={(e) => this.cancel()}
@@ -188,16 +201,14 @@ export class ActorsMnt extends Component {
       default:
         if (this.state.listado)
           result.push(
-            <ActoresList
+            <CategoriesList
               key="main"
               listado={this.state.listado}
-              pagina={this.state.pagina}
-              paginas={this.state.paginas}
               onAdd={(e) => this.add()}
               onView={(key) => this.view(key)}
               onEdit={(key) => this.edit(key)}
               onDelete={(key) => this.delete(key)}
-              onChangePage={(num) => this.list(num)}
+
             />
           );
         break;
@@ -206,13 +217,13 @@ export class ActorsMnt extends Component {
   }
 }
 
-function ActoresList(props) {
+function CategoriesList(props) {
   return (
     <>
       <table className="table table-hover table-striped">
         <thead className="table-info">
           <tr>
-            <th>Lista de Actores y Actrices</th>
+            <th>Lista de Categorias</th>
             <th className="text-end">
               <input
                 type="button"
@@ -225,27 +236,27 @@ function ActoresList(props) {
         </thead>
         <tbody className="table-group-divider">
           {props.listado.map((item) => (
-            <tr key={item.actorId}>
-              <td>{titleCase(item.nombre)}</td>
+            <tr key={item.id}>
+              <td>{titleCase(item.categoria)}</td>
               <td className="text-end">
                 <div className="btn-group text-end" role="group">
                   <input
                     type="button"
                     className="btn btn-primary"
                     value="Ver"
-                    onClick={(e) => props.onView(item.actorId)}
+                    onClick={(e) => props.onView(item.id)}
                   />
                   <input
                     type="button"
                     className="btn btn-primary"
                     value="Editar"
-                    onClick={(e) => props.onEdit(item.actorId)}
+                    onClick={(e) => props.onEdit(item.id)}
                   />
                   <input
                     type="button"
                     className="btn btn-danger"
                     value="Borrar"
-                    onClick={(e) => props.onDelete(item.actorId)}
+                    onClick={(e) => props.onDelete(item.id)}
                   />
                 </div>
               </td>
@@ -253,24 +264,20 @@ function ActoresList(props) {
           ))}
         </tbody>
       </table>
-      <Paginacion
-        actual={props.pagina}
-        total={props.paginas}
-        onChange={(num) => props.onChangePage(num)}
-      />
     </>
   );
 }
 
-function ActoresView({ elemento, onCancel }) {
+function CategoriesView({ elemento, onCancel }) {
   return (
+
+    
     <div>
       <p>
         <b>Código:</b> {elemento.id}
         <br />
-        <b>Nombre:</b> {elemento.name}
+        <b>Nombre:</b> {elemento.categoria}
         <br />
-        <b>Apellidos:</b> {elemento.surname}
       </p>
       <p>
         <button
@@ -285,7 +292,7 @@ function ActoresView({ elemento, onCancel }) {
   );
 }
 
-class ActoresForm extends Component {
+class CategoriesForm extends Component {
   constructor(props) {
     super(props);
     this.state = { elemento: props.elemento, msgErr: [], invalid: false };
@@ -359,34 +366,21 @@ class ActoresForm extends Component {
           <ValidationMessage msg={this.state.msgErr.id} />
         </div>
         <div className="form-group">
-          <label htmlFor="name">Nombre</label>
+          <label htmlFor="categoria">Categoria</label>
           <input
             type="text"
             className="form-control"
-            id="name"
-            name="name"
-            value={this.state.elemento.name}
+            id="categoria"
+            name="categoria"
+            value={this.state.elemento.categoria}
             onChange={this.handleChange}
             required
             minLength="2"
             maxLength="45"
           />
-          <ValidationMessage msg={this.state.msgErr.name} />
+          <ValidationMessage msg={this.state.msgErr.categoria} />
         </div>
-        <div className="form-group">
-          <label htmlFor="surname">Apellidos</label>
-          <input
-            type="text"
-            className="form-control"
-            id="surname"
-            name="surname"
-            value={this.state.elemento.surname}
-            onChange={this.handleChange}
-            minLength="2"
-            maxLength="10"
-          />
-          <ValidationMessage msg={this.state.msgErr.surname} />
-        </div>
+
         <div className="form-group">
           <button
             className="btn btn-primary"

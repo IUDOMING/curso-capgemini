@@ -8,7 +8,9 @@ import { ErrorBoundary } from './comunes';
 import Calculadora from './ejercicios/calculadora';
 import Muro from './ejercicios/muro';
 import { PadreFormulario } from './formulario';
-import { ActoresMnt } from './componentes/actores';
+import { ActorsMnt } from './componentes/actores';
+import { CategoriesMnt } from './componentes/categorias';
+import Pruebas from './componentes/pruebas';
 
 export default class App extends Component {
   constructor(props) {
@@ -18,7 +20,9 @@ export default class App extends Component {
       main: 0
     }
     this.menu = [
-      { texto: 'actores', url: '/actores', componente: <ActoresMnt /> },
+      { texto: 'pruebas', url: '/pruebas', componente: <Pruebas /> },
+      { texto: 'categorias', url: '/categorias', componente: <CategoriesMnt /> },
+      { texto: 'actores', url: '/actores', componente: <ActorsMnt /> },
       { texto: 'fromulario', url: '/fromulario', componente: <PadreFormulario /> },
       { texto: 'inicio', url: '/', componente: <Home /> },
       { texto: 'demos', url: '/demos', componente: <DemosJSX /> },
