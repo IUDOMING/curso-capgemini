@@ -291,7 +291,7 @@ function ActoresView({ elemento, onCancel }) {
         <br />
         <b>Rating de edad:</b> {elemento.rating}
         <br />
-        <b>Actores:</b> {elemento.actors}
+        <b>Actores:</b> {elemento.actors.map((actor) => <li>{actor}</li>)}
         <br />
         <b>Categoria:</b> {elemento.categories}
         <br />
@@ -424,20 +424,6 @@ class ActoresForm extends Component {
             maxLength="45"
           />
           <ValidationMessage msg={this.state.msgErr.releaseYear} />
-        </div>
-        <div className="form-group">
-          <label htmlFor="description">Descripción</label>
-          <input
-            type="text"
-            className="form-control"
-            id="description"
-            name="description"
-            value={this.state.elemento.description}
-            onChange={this.handleChange}
-            minLength="2"
-            maxLength="45"
-          />
-          <ValidationMessage msg={this.state.msgErr.description} />
         </div>
          <div className="form-group">
           <label htmlFor="language">Idioma</label>
