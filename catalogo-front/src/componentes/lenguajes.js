@@ -343,7 +343,7 @@ class LanguagesForm extends Component {
             onChange={this.handleChange}
             required
             minLength="2"
-            maxLength="45"
+            maxLength="20"
           />
           <ValidationMessage msg={this.state.msgErr.idioma} />
         </div>

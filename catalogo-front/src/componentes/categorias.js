@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ValidationMessage, ErrorMessage, Esperando,} from "../biblioteca/comunes";
+import { ValidationMessage, ErrorMessage, Esperando, PaginacionCmd as Paginacion,} from "../biblioteca/comunes";
 import { titleCase } from "../biblioteca/formateadores";
 export class CategoriesMnt extends Component {
   constructor(props) {
@@ -10,6 +10,8 @@ export class CategoriesMnt extends Component {
       elemento: null,
       error: null,
       loading: true,
+      pagina: 0,
+      paginas: 0,
     };
     this.idOriginal = null;
     this.url =(process.env.REACT_APP_API_URL || "http://localhost:8003/") +"/api/categorias/v1";
@@ -18,44 +20,28 @@ export class CategoriesMnt extends Component {
   setError(msg) {
     this.setState({ error: msg, loading: false });
   }
-
-//   list() {
-//     this.setState({ loading: true });
-//     fetch(`${this.url}`)
-//       .then((response) => {
-//         response.json().then(
-//           response.ok
-//             ? (data) => {
-//                 this.setState({
-//                   modo: "list",
-//                   listado: data.content,
-//                   loading: false,
-//                 });
-//               }
-//             : (error) => this.setError(`${error.status}: ${error.error}`)
-//         );
-//       })
-//       .catch((error) => this.setError(error));
-//   }
-
-   list(num) {
-     this.setState({loading: true})
-     fetch(`${this.url}`)
-     .then((response) => {
-                response.json().then(
-           response.ok
-             ? (data) => {
-                 this.setState({
-                   modo: "list",
-                   listado: data,
-                   loading: false,
-                 });
-               }
-             : (error) => this.setError(`${error.status}: ${error.error}`)
-         );
-       })
-       .catch((error) => this.setError(error));
-   }
+  list(num) {
+    let pagina = this.state.pagina;
+    if (num || num === 0) pagina = num;
+    this.setState({ loading: true });
+    fetch(`${this.url}?page=${pagina}&size=10`)
+      .then((response) => {
+        response.json().then(
+          response.ok
+            ? (data) => {
+                this.setState({
+                  modo: "list",
+                  listado: data.content,
+                  loading: false,
+                  pagina: data.number,
+                  paginas: data.totalPages,
+                });
+              }
+            : (error) => this.setError(`${error.status}: ${error.error}`)
+        );
+      })
+      .catch((error) => this.setError(error));
+  }
 
   add() {
     this.setState({
@@ -200,18 +186,20 @@ export class CategoriesMnt extends Component {
         break;
       default:
         if (this.state.listado)
-          result.push(
-            <CategoriesList
-              key="main"
-              listado={this.state.listado}
-              onAdd={(e) => this.add()}
-              onView={(key) => this.view(key)}
-              onEdit={(key) => this.edit(key)}
-              onDelete={(key) => this.delete(key)}
-
-            />
-          );
-        break;
+        result.push(
+          <CategoriesList
+            key="main"
+            listado={this.state.listado}
+            pagina={this.state.pagina}
+            paginas={this.state.paginas}
+            onAdd={(e) => this.add()}
+            onView={(key) => this.view(key)}
+            onEdit={(key) => this.edit(key)}
+            onDelete={(key) => this.delete(key)}
+            onChangePage={(num) => this.list(num)}
+          />
+        );
+      break;
     }
     return result;
   }
@@ -264,6 +252,11 @@ function CategoriesList(props) {
           ))}
         </tbody>
       </table>
+      <Paginacion
+        actual={props.pagina}
+        total={props.paginas}
+        onChange={(num) => props.onChangePage(num)}
+      />
     </>
   );
 }
@@ -362,7 +355,7 @@ class CategoriesForm extends Component {
             onChange={this.handleChange}
             required
             minLength="2"
-            maxLength="45"
+            maxLength="25"
           />
           <ValidationMessage msg={this.state.msgErr.categoria} />
         </div>
