@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.CategoryService;
 import com.example.domains.entities.Category;
+import com.example.domains.entities.dtos.ActorShort;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
@@ -39,6 +42,11 @@ public class CategoryResources {
 		if (sort != null)
 			return (List<Category>) srv.getAll();
 		return srv.getAll();
+	}
+	
+	@GetMapping(params="page")
+	public Page<Category> getAll(Pageable pageable) {
+		return srv.getByProjection(pageable, Category.class);
 	}
 
 	@GetMapping(path = "/{id}")

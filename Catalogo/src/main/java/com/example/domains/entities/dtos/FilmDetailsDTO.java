@@ -39,7 +39,7 @@ public class FilmDetailsDTO {
 				source.getReplacementCost(),
 				source.getLength(),
 				source.getRating(),
-				source.getActors().stream().map(item-> item.getFirstName() + " " + item.getLastName()).sorted().toList(),
+				source.getActors().stream().map(item->item.getActorId() + item.getFirstName() + " " + item.getLastName()).sorted().toList(),
 				source.getCategories().stream().map(item->item.getName()).sorted().toList()
 				);
 	}

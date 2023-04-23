@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,35 @@ public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	private CategoryRepository dao;
 
+	@Override
+	public <T> List<T> getByProjection(Class<T> type) {
+		// TODO Auto-generated method stub
+		return dao.findAllBy(type);
+	}
+
+	@Override
+	public <T> Iterable<T> getByProjection(Sort sort, Class<T> type) {
+		// TODO Auto-generated method stub
+		return dao.findAllBy(sort, type);
+	}
+
+	@Override
+	public <T> Page<T> getByProjection(Pageable pageable, Class<T> type) {
+		// TODO Auto-generated method stub
+		return dao.findAllBy(pageable, type);
+	}
+
+	@Override
+	public Page<Category> getAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return dao.findAll(pageable);
+	}
+
+	@Override
+	public Iterable<Category> getAll(Sort sort) {
+		// TODO Auto-generated method stub
+		return dao.findAll(sort);
+	}
 	@Override
 	public List<Category> getAll() {
 		return dao.findAll();

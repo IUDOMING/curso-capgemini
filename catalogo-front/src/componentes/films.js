@@ -293,7 +293,7 @@ function ActoresView({ elemento, onCancel }) {
         <br />
         <b>Actores:</b> {elemento.actors.map((actor) => <li>{actor}</li>)}
         <br />
-        <b>Categoria:</b> {elemento.categories}
+        <b>Categoria:</b> {elemento.categories.map((category)=><li>{category}</li>)}
         <br />
       </p>
       <p>
@@ -425,20 +425,20 @@ class ActoresForm extends Component {
           />
           <ValidationMessage msg={this.state.msgErr.releaseYear} />
         </div>
-         <div className="form-group">
+         {/* <div className="form-group">
           <label htmlFor="language">Idioma</label>
           <input
             type="text"
             className="form-control"
             id="language"
             name="language"
-            value={this.state.elemento.language}
+            value={this.state.elemento.language.id}
             onChange={this.handleChange}
             minLength="2"
             maxLength="45"
           />
           <ValidationMessage msg={this.state.msgErr.language} />
-        </div> 
+        </div>  */}
         <div className="form-group">
           <label htmlFor="languageVO">Idioma original:</label>
           <input
@@ -523,7 +523,7 @@ class ActoresForm extends Component {
           />
           <ValidationMessage msg={this.state.msgErr.rating} />
         </div>
-        <div className="form-group">
+         <div className="form-group">
           <label htmlFor="actors">Actores:</label>
           <input
             type="text"
@@ -537,20 +537,20 @@ class ActoresForm extends Component {
           />
           <ValidationMessage msg={this.state.msgErr.actors} />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="categories">Categoria:</label>
           <input
             type="text"
             className="form-control"
             id="categories"
             name="categories"
-            value={this.state.elemento.categories}
+            value={this.state.elemento.categories.category}
             onChange={this.handleChange}
             minLength="2"
             maxLength="45"
           />
           <ValidationMessage msg={this.state.msgErr.categories} />
-        </div>
+        </div> */}
         <div className="form-group">
           <button
             className="btn btn-primary"
