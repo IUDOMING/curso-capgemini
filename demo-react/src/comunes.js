@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import ReactPaginate from 'react-paginate';
 import imgAjaxLoading from './imagenes/loading.gif'
 
 export class ErrorBoundary extends React.Component {
