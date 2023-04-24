@@ -26,6 +26,7 @@ import com.example.domains.entities.Film;
 import com.example.domains.entities.dtos.ActorFilmsDTO;
 import com.example.domains.entities.dtos.CategoriesFilmDTO;
 import com.example.domains.entities.dtos.FilmDetailsDTO;
+import com.example.domains.entities.dtos.FilmEditDTO;
 import com.example.domains.entities.dtos.FilmShortDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
@@ -83,9 +84,9 @@ public class FilmResources {
 	}
 
 	@PostMapping
-	public ResponseEntity<Object> create(@Valid @RequestBody Film item)
+	public ResponseEntity<Object> create(@Valid @RequestBody FilmEditDTO item)
 			throws BadRequestException, DuplicateKeyException, InvalidDataException {
-		var newItem = srv.add(item);
+		var newItem = srv.add(FilmEditDTO.from(item));
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(newItem.getFilmId()).toUri();
 		return ResponseEntity.created(location).build();
@@ -94,11 +95,11 @@ public class FilmResources {
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable int id, @Valid @RequestBody Film item)
+	public void update(@PathVariable int id, @Valid @RequestBody FilmEditDTO item)
 			throws BadRequestException, NotFoundException, InvalidDataException {
 		if (id != item.getFilmId())
 			throw new BadRequestException("No coinciden los identificadores");
-		srv.modify(item);
+		srv.modify(FilmEditDTO.from(item));
 	}
 
 	@DeleteMapping("/{id}")
