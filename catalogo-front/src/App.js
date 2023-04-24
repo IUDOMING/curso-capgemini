@@ -6,7 +6,6 @@ import React, { Component } from 'react'
 import { ErrorBoundary } from './comunes';
 import { ActorsMnt } from './componentes/actores';
 import { CategoriesMnt } from './componentes/categorias';
-import Pruebas from './componentes/pruebas';
 import { LanguagesMnt } from './componentes/lenguajes';
 import { FilmsMnt } from './componentes/films';
 
@@ -19,7 +18,6 @@ export default class App extends Component {
     }
     this.menu = [
       { texto: 'Inicio', url: '/', componente: <Home /> },
-      { texto: 'pruebas', url: '/pruebas', componente: <Pruebas /> },
       { texto: 'Peliculas', url: '/peliculas', componente: <FilmsMnt /> },
       { texto: 'Lenguages', url: '/lenguages', componente: <LanguagesMnt /> },
       { texto: 'Categorias', url: '/categorias', componente: <CategoriesMnt /> },

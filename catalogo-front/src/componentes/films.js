@@ -7,6 +7,7 @@ export class FilmsMnt extends Component {
     this.state = {
       modo: "list",
       listado: null,
+      listadoCat: null,
       elemento: null,
       error: null,
       loading: true,
@@ -25,7 +26,7 @@ export class FilmsMnt extends Component {
     let pagina = this.state.pagina;
     if (num || num === 0) pagina = num;
     this.setState({ loading: true });
-    fetch(`${this.url}?page=${pagina}&size=10`)
+    fetch(`${this.url}?page=${pagina}&size=30`)
       .then((response) => {
         response.json().then(
           response.ok
@@ -41,7 +42,6 @@ export class FilmsMnt extends Component {
             : (error) => this.setError(`${error.status}: ${error.error}`)
         );
       })
-      .catch((error) => this.setError(error));
   }
 
   add() {
@@ -170,7 +170,7 @@ export class FilmsMnt extends Component {
       case "add":
       case "edit":
         result.push(
-          <ActoresForm
+          <FilmsForm
             key="main"
             isAdd={this.state.modo === "add"}
             elemento={this.state.elemento}
@@ -181,7 +181,7 @@ export class FilmsMnt extends Component {
         break;
       case "view":
         result.push(
-          <ActoresView
+          <FilmsView
             key="main"
             elemento={this.state.elemento}
             onCancel={(e) => this.cancel()}
@@ -191,7 +191,7 @@ export class FilmsMnt extends Component {
       default:
         if (this.state.listado)
           result.push(
-            <ActoresList
+            <FilmsList
               key="main"
               listado={this.state.listado}
               pagina={this.state.pagina}
@@ -209,13 +209,13 @@ export class FilmsMnt extends Component {
   }
 }
 
-function ActoresList(props) {
+function FilmsList(props) {
   return (
     <>
       <table className="table table-hover table-striped">
         <thead className="table-info">
           <tr>
-            <th>Lista de Actores y Actrices</th>
+            <th>Lista de Películas</th>
             <th className="text-end">
               <input
                 type="button"
@@ -265,7 +265,7 @@ function ActoresList(props) {
   );
 }
 
-function ActoresView({ elemento, onCancel }) {
+function FilmsView({ elemento, onCancel }) {
   return (
     <div>
       <p>
@@ -309,7 +309,7 @@ function ActoresView({ elemento, onCancel }) {
   );
 }
 
-class ActoresForm extends Component {
+class FilmsForm extends Component {
   constructor(props) {
     super(props);
     this.state = { elemento: props.elemento, msgErr: [], invalid: false };
@@ -361,6 +361,7 @@ class ActoresForm extends Component {
   componentDidMount() {
     this.validar();
   }
+    
   render() {
     return (
       <form
@@ -425,7 +426,7 @@ class ActoresForm extends Component {
           />
           <ValidationMessage msg={this.state.msgErr.releaseYear} />
         </div>
-         {/* <div className="form-group">
+          <div className="form-group">
           <label htmlFor="language">Idioma</label>
           <input
             type="text"
@@ -438,7 +439,7 @@ class ActoresForm extends Component {
             maxLength="45"
           />
           <ValidationMessage msg={this.state.msgErr.language} />
-        </div>  */}
+        </div> 
         <div className="form-group">
           <label htmlFor="languageVO">Idioma original:</label>
           <input
@@ -530,27 +531,47 @@ class ActoresForm extends Component {
             className="form-control"
             id="actors"
             name="actors"
-            value={this.state.elemento.actors}
+            value=""
             onChange={this.handleChange}
             minLength="2"
             maxLength="45"
           />
           <ValidationMessage msg={this.state.msgErr.actors} />
+          <div className="checkList">
+            <div className="list-container">
+              {this.state.elemento.actors.map((item, index) => (
+               <div key={index}>
+               <input value={item} type="checkbox" />
+               <span>{item}</span>
+             </div>
+          ))}
+            </div>
+          </div>
         </div>
-        {/* <div className="form-group">
+        <div className="form-group">
           <label htmlFor="categories">Categoria:</label>
           <input
             type="text"
             className="form-control"
             id="categories"
             name="categories"
-            value={this.state.elemento.categories.category}
+            value=""
             onChange={this.handleChange}
             minLength="2"
             maxLength="45"
           />
           <ValidationMessage msg={this.state.msgErr.categories} />
-        </div> */}
+        <div className="checkList">
+            <div className="list-container">
+              {this.state.elemento.categories.map((item, index) => (
+               <div key={index}>
+               <input value={item} type="checkbox" />
+               <span>{item}</span>
+             </div>
+          ))}
+            </div>
+          </div>
+        </div>
         <div className="form-group">
           <button
             className="btn btn-primary"
